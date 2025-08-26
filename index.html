@@ -1,0 +1,1639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="image_src" href="assets/网站缩略图.png" />
+    <meta property="og:image" content="assets/网站缩略图.png" />
+    <meta name="twitter:image" content="assets/网站缩略图.png" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n-key="page_title">Sinnkawa | Your Cutest Singapore Adventure Starts Here!</title>
+
+    <!-- SEO and Meta Tags -->
+    <meta name="description" content="Explore Singapore with Sinnkawa, the adorable blue friend! Discover our stores, themed cafe, exclusive merchandise, and the vibrant culture of the Lion City.">
+    <meta name="keywords" content="Sinnkawa, Singapore, travel, gifts, character, IP, Chinatown, Haji Lane, cafe, Merlion, Otata">
+    <meta name="author" content="Sinnkawa">
+    <!-- Social preview -->
+    <meta property="og:image" content="assets/LOGO/logoAI文件.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="assets/LOGO/网站缩略图.png">
+    <!-- Favicon -->
+    <link rel="icon" href="assets/LOGO/网站缩略图.png" type="image/png">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Poppins:wght@300;400;500;700&display=swap">
+    <!-- Swiper.js CSS for Carousel -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    
+    <!-- Google Analytics 4 (GA4) - Removed for preview -->
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Swiper.js for Carousel -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <!-- i18next for translations -->
+    <script src="https://unpkg.com/i18next@22.4.9/i18next.min.js"></script>
+
+    <!-- 开屏动画脚本 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const splashScreen = document.getElementById('splash-screen');
+            const splashContent = document.querySelector('.splash-content');
+            const textContainer = document.getElementById('text-container');
+            const singaporeFlag = document.getElementById('splash-text-singapore');
+            const equalsSign = document.getElementById('splash-equals');
+            const poof = document.getElementById('splash-poof');
+            const finalLogoContainer = document.getElementById('final-logo-container');
+            const tagline = document.getElementById('splash-tagline');
+            const mainContent = document.body.querySelector('main') || document.body;
+
+            // 1. 启动动画
+            splashContent.classList.add('animate-splash');
+
+            // 2. 监听国旗动画的结束事件
+            singaporeFlag.addEventListener('animationend', (e) => {
+                if (e.animationName === 'slide-in-from-right') {
+                    // 3. 显示等于号
+                    equalsSign.classList.add('visible');
+
+                    // 4. 短暂延迟后，触发碰撞和白烟
+                    setTimeout(() => {
+                        textContainer.classList.add('collided');
+                        poof.classList.add('visible');
+                        finalLogoContainer.classList.add('visible');
+
+                        // 5. 在 Logo 容器出现后，再触发标语的动画
+                        finalLogoContainer.addEventListener('animationend', (ev) => {
+                            if (ev.animationName === 'logo-container-appear') {
+                                tagline.classList.add('visible');
+                            }
+                        }, { once: true });
+                    }, 400);
+                }
+            });
+
+            // 6. 在整个动画序列的末尾隐藏加载屏幕
+            setTimeout(() => {
+                splashScreen.style.opacity = '0';
+                setTimeout(() => {
+                    splashScreen.remove();
+                    document.body.style.overflow = 'auto'; // 恢复页面滚动
+                }, 500);
+            }, 5500); // 总时长约 6 秒
+        });
+    </script>
+
+    <!-- Custom Styles and Tailwind Configuration -->
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .animate-float { animation: float 6s ease-in-out infinite; }
+            .animate-bounce-slow { animation: bounce 3s infinite; }
+            .fade-in {
+                opacity: 0;
+                transform: translateY(20px);
+                transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            }
+            .fade-in.visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            /* 新增开屏动画样式 */
+            .splash-text {
+                font-size: clamp(2rem, 8vw, 4.5rem);
+                font-weight: 900;
+                color: #58BEC9;
+                text-shadow: 3px 3px 6px rgba(0,0,0,0.1);
+                white-space: nowrap;
+                opacity: 0;
+            }
+            .animate-splash #splash-text-cuteness {
+                animation: slide-in-from-left 1s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
+            }
+            .animate-splash #splash-plus {
+                animation: slide-in-from-left 1s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards;
+            }
+            .animate-splash #splash-text-singapore {
+                animation: slide-in-from-right 1s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
+            }
+            .animate-splash #splash-equals.visible {
+                animation: equals-appear 0.3s ease-out forwards;
+            }
+            .animate-splash #text-container.collided {
+                animation: items-collide 0.5s ease-out forwards;
+            }
+            .animate-splash #splash-poof.visible {
+                animation: poof-effect 0.8s steps(15) forwards;
+            }
+            .animate-splash #final-logo-container.visible {
+                animation: logo-container-appear 0.7s cubic-bezier(0.68, -0.6, 0.32, 1.6) 0.2s forwards;
+            }
+            .animate-splash #splash-tagline.visible {
+                animation: tagline-appear 0.6s ease-out 0.3s forwards;
+            }
+            @keyframes slide-in-from-right {
+                100% { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slide-in-from-left {
+                100% { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes equals-appear {
+                100% { opacity: 1; }
+            }
+            @keyframes items-collide {
+                100% { transform: scale(0.8); opacity: 0; }
+            }
+            @keyframes poof-effect {
+                0% { background-position: 0 0; opacity: 1; transform: scale(0.5); }
+                100% { background-position: -4500px 0; opacity: 0; transform: scale(1.5); }
+            }
+            @keyframes logo-container-appear {
+                100% { opacity: 1; transform: scale(1); }
+            }
+            @keyframes tagline-appear {
+                100% { opacity: 1; }
+            }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        
+
+        .parallax-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        .sg-icon {
+            position: absolute;
+            opacity: 0.08;
+            transition: transform 0.3s ease-out;
+        }
+        
+        /* Character Carousel Buttons */
+        .character-next, .character-prev {
+            color: #4a5c5c !important;
+            font-weight: 900 !important;
+            text-shadow: 0 0 2px rgba(255,255,255,0.5);
+            top: 40%;
+        }
+        .character-next:after, .character-prev:after {
+            font-size: 28px !important;
+            font-weight: 900 !important;
+        }
+
+        /* --- Hero Carousel Component Styles --- */
+        .hero-swiper {
+            width: 100%;
+            height: 90vh; 
+        }
+        .swiper-slide {
+            text-align: center;
+            font-size: 18px;
+            background: #fff;
+            display: flex;
+            background-size: cover;
+            background-position: center;
+        }
+        /* [MODIFIED] 文案容器统一居于左下角 */
+        .slide-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end; /* 垂直居底 */
+            align-items: flex-start;   /* 水平居左 */
+            padding: 2rem;
+            text-align: left;
+        }
+
+        /* [MODIFIED] 文案容器背景更透明 */
+        .text-overlay {
+            background: rgba(0, 0, 0, 0.3); /* 更透明的深色背景 */
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            max-width: 90%;
+        }
+        @media (min-width: 769px) {
+            .text-overlay {
+                 max-width: 50%;
+                 padding: 1.5rem 2rem;
+            }
+        }
+
+        .slide-title {
+            font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            line-height: 1.2;
+            color: white;
+        }
+        .slide-subtitle {
+            font-size: clamp(0.875rem, 1.8vw, 1rem);
+            margin-top: 0.75rem;
+            max-width: 650px;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+            color: white;
+        }
+        
+        #hero-carousel .swiper-button-next,
+        #hero-carousel .swiper-button-prev {
+            color: white !important;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+        #hero-carousel .swiper-button-next:after, 
+        #hero-carousel .swiper-button-prev:after {
+             font-size: 32px !important;
+             font-weight: 900 !important;
+        }
+        #hero-carousel .swiper-pagination-bullet-active {
+            background-color: white !important;
+        }
+        /* --- End Hero Carousel Styles --- */
+        
+        #bot-modal-backdrop {
+            transition: opacity 0.3s ease-in-out;
+        }
+        #bot-modal-content {
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        }
+        /* Hide scrollbar for mobile horizontal scroll */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* Character Detail Styles */
+        .character-detail-card {
+            display: none;
+        }
+        .character-detail-card.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .avatar-item.active img {
+            border-color: #58BEC9; /* New Primary Color */
+            transform: scale(1.1);
+        }
+
+        /* Center the text inside discover section buttons */
+        .discover-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        /* Character Detail Section */
+        #character-details {
+            background-color: #fff;
+            border-radius: 24px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            padding: 2rem;
+            margin-top: 2rem;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Product Categories Section */
+        .products-section {
+            /* Reduce vertical padding for a more compact layout */
+            padding: 20px 0;
+            background-color: #f7fdfb; /* Lighter secondary */
+            border-radius: 24px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .products-section::before {
+            content: "";
+            position: absolute;
+            top: -20%;
+            right: -10%;
+            width: 40%;
+            height: 40%;
+            background-color: rgba(88, 190, 201, 0.1); /* New Primary Color with opacity */
+            border-radius: 50%;
+            z-index: 0;
+        }
+        .products-section::after {
+            content: "";
+            position: absolute;
+            bottom: -15%;
+            left: -5%;
+            width: 30%;
+            height: 30%;
+            background-color: rgba(240, 179, 27, 0.05); /* New Accent Color with opacity */
+            border-radius: 50%;
+            z-index: 0;
+        }
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            max-width: 1000px;
+            margin: 20px auto 0;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+        .product-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .product-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 20px;
+            background-color: rgba(88, 190, 201, 0.1); /* New Primary Color with opacity */
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #58BEC9; /* New Primary Color */
+            font-size: 28px;
+        }
+        .product-title {
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #4a5c5c;
+            font-size: 18px;
+        }
+        .product-desc {
+            font-size: 14px;
+            color: #7f9595;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+        
+        /* AI Bot Styles */
+        #bot-modal-content {
+            width: 90%;
+            max-width: 400px;
+            height: 70vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        #bot-messages {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .bot-message {
+            align-self: flex-start;
+            background-color: #E2F3ED; /* New Secondary Color */
+            padding: 0.75rem;
+            border-radius: 16px 16px 16px 0;
+            max-width: 80%;
+        }
+        
+        .user-message {
+            align-self: flex-end;
+            background-color: #58BEC9; /* New Primary Color */
+            color: white;
+            padding: 0.75rem;
+            border-radius: 16px 16px 0 16px;
+            max-width: 80%;
+        }
+        
+        #bot-input-container {
+            display: flex;
+            gap: 0.5rem;
+            padding: 1rem;
+            border-top: 1px solid #D1E8E2; /* New Border Color */
+        }
+        
+        #bot-input {
+            flex-grow: 1;
+            padding: 0.75rem 1rem;
+            border-radius: 20px;
+            border: 1px solid #D1E8E2; /* New Border Color */
+            outline: none;
+        }
+        
+        #bot-send {
+            background-color: #58BEC9; /* New Primary Color */
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        #bot-menu {
+            display: flex;
+            justify-content: space-around;
+            padding: 0.75rem;
+            border-top: 1px solid #D1E8E2; /* New Border Color */
+        }
+        
+        .bot-menu-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+            color: #7f9595;
+            cursor: pointer;
+            font-size: 0.75rem;
+        }
+        
+        .bot-menu-item:hover {
+            color: #58BEC9; /* New Primary Color */
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+            .product-card { padding: 20px 15px; }
+            .product-icon { width: 60px; height: 60px; font-size: 24px; }
+            .product-title { font-size: 16px; }
+            .product-desc { font-size: 13px; }
+            .hero-swiper {
+                height: 80vh; /* Adjust for mobile */
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .products-grid { grid-template-columns: 1fr; }
+        }
+        
+        /* Language display logic */
+        html[lang="zh"] .en-link { display: none; }
+        html[lang="en"] .zh-link { display: none; }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#58BEC9',        // Main theme color
+                        'primary-hover': '#4EADB7',  // Darker hover
+                        'secondary': '#E2F3ED',      // Light background
+                        'accent': '#F0B31B',         // Accent color
+                        'accent-hover': '#D9A119',   // Darker accent hover
+                        'dark': '#4a5c5c',           // Dark Text
+                        'muted': '#7f9595',          // Muted Text
+                        'light': '#FFFFFF',          // Card Background
+                        'light-border': '#D1E8E2',   // Border Color
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', '"Noto Sans SC"', 'sans-serif'],
+                        display: ['Poppins', '"Noto Sans SC"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-secondary text-dark font-sans antialiased pb-20 md:pb-0">
+    
+    <!-- Parallax Background -->
+    <div class="parallax-bg hidden md:block">
+        <div id="parallax-1" class="sg-icon" style="width: 30%; top: 10%; left: 5%;"><img src="assets/占位图/背景1.png" loading="lazy" alt="Theme colored Singapore scenery background 1"></div>
+        <div id="parallax-2" class="sg-icon" style="width: 25%; top: 50%; right: 10%;"><img src="assets/占位图/背景2.png" loading="lazy" alt="Theme colored Singapore scenery background 2"></div>
+        <div id="parallax-3" class="sg-icon" style="width: 35%; bottom: 5%; left: 15%;"><img src="assets/占位图/背景3.png" loading="lazy" alt="Theme colored Singapore scenery background 3"></div>
+    </div>
+
+    <!-- 新的开屏动画 -->
+    <div id="splash-screen" class="fixed inset-0 bg-secondary z-[100] flex items-center justify-center overflow-hidden transition-opacity-500 ease-out animate-splash">
+        <div class="splash-content relative w-full h-full flex items-center justify-center">
+            <div id="text-container" class="absolute flex items-center justify-center gap-1vw">
+                <div id="splash-text-cuteness" class="splash-text" style="transform: translateX(-50px);">Cuteness?</div>
+                <div id="splash-plus" class="splash-text" style="transform: translateX(-50px);">+</div>
+                <div id="splash-text-singapore" class="splash-text" style="font-size: clamp(4rem, 12vw, 7rem); transform: translateX(50px);">🇸🇬</div>
+                <div id="splash-equals" class="splash-text" style="opacity: 0;">=</div>
+            </div>
+            <div id="splash-poof" class="absolute w-[300px] h-[300px] bg-[url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/127738/smoke-sprite.png')] bg-cover opacity-0 transform scale-50 filter brightness-110"></div>
+            <div id="final-logo-container" class="absolute flex flex-col items-center opacity-0 transform scale-70">
+                <img id="splash-final-logo" src="assets/LOGO/logoAI文件.png" alt="Sinnkawa Logo" class="w-full max-w-[300px]">
+                <p id="splash-tagline" class="mt-4 text-[clamp(1rem,3vw,1.5rem)] font-bold text-primary text-center opacity-0" data-i18n-key="splash_text">Ready for the cuteness adventure with sinnkawa？</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Action Buttons -->
+    <div class="fixed bottom-24 right-4 z-50 flex flex-col gap-6 md:bottom-6 md:right-6">
+        <button id="back-to-top" aria-label="Back to Top" class="bg-primary hover:bg-primary-hover text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all duration-200 opacity-0 invisible">
+            <i class="fa fa-chevron-up text-xl" aria-hidden="true"></i>
+        </button>
+    </div>
+
+    <!-- AI Bot Modal -->
+    <div id="bot-modal" class="fixed inset-0 z-[102] flex items-center justify-center hidden">
+        <div id="bot-modal-backdrop" class="absolute inset-0 bg-black/60 opacity-0"></div>
+        <div id="bot-modal-content" class="relative bg-light rounded-2xl shadow-xl m-4 overflow-hidden transform scale-95 opacity-0 flex flex-col">
+            <div class="bg-primary text-white p-4 flex justify-between items-center">
+                <h3 class="font-bold">
+                    <span class="en-link">KAKAWAWA - AI Robot for assistant your needed!</span>
+                    <span class="zh-link">新小哇 - 遇事不决，找我来帮你解决！</span>
+                </h3>
+                <button id="close-bot-modal-btn" class="text-white text-xl">&times;</button>
+            </div>
+            <div id="bot-messages">
+                <div class="bot-message">
+                    <span class="en-link">Hello! Welcome to <span class="text-primary">Sinnkawa</span>. How can I assist you today?</span>
+                    <span class="zh-link">你好！欢迎来到 <span class="text-primary">Sinnkawa</span>。我能为你提供什么帮助？</span>
+                </div>
+            </div>
+            <div id="bot-menu">
+                <div class="bot-menu-item" id="bot-whatsapp">
+                    <i class="fa fa-whatsapp text-xl"></i>
+                    <span>WhatsApp</span>
+                </div>
+                <div class="bot-menu-item" id="bot-form">
+                    <i class="fa fa-file-text-o text-xl"></i>
+                    <span>Form</span>
+                </div>
+            </div>
+            <div id="bot-input-container">
+                <input type="text" id="bot-input" placeholder="Type your message...">
+                <button id="bot-send">
+                    <i class="fa fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header & Navigation -->
+    <header class="sticky top-0 w-full bg-light/80 backdrop-blur-sm shadow-sm z-40 transition-all duration-200">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20 md:h-24">
+                <!-- Logo -->
+                <a href="#" class="flex-shrink-0">
+                    <img src="assets/LOGO/logo.png" alt="Sinnkawa Logo" class="h-20 md:h-24">
+                </a>
+
+                <!-- Main Navigation -->
+                <nav class="hidden md:flex space-x-8" aria-label="Main Navigation">
+                    <a href="mendian.html" class="text-dark hover:text-primary font-medium transition-all duration-200" data-i18n-key="nav_locations"></a>
+                    <button id="news-nav-button" class="text-dark hover:text-primary font-medium transition-all duration-200" data-i18n-key="nav_news"></button>
+                    <a href="#characters" class="text-dark hover:text-primary font-medium transition-all duration-200" data-i18n-key="nav_characters"></a>
+                    <a href="#products" class="text-dark hover:text-primary font-medium transition-all duration-200" data-i18n-key="nav_products"></a>
+                    <a href="hezuo.html" class="text-dark hover:text-primary font-medium transition-all duration-200" data-i18n-key="nav_cooperation"></a>
+                </nav>
+                
+                <!-- Language and Mobile Menu Button -->
+                <div class="flex items-center space-x-4">
+                    <div class="relative group">
+                        <button id="language-selector" aria-label="Select Language" class="flex items-center text-sm font-medium hover:text-primary transition-all duration-200 bg-primary/10 px-3 py-1 rounded-full">
+                            <i class="fa fa-globe text-lg text-primary" aria-hidden="true"></i>
+                        </button>
+                        <div class="absolute right-0 mt-2 w-36 bg-light shadow-lg rounded-md overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                            <a href="#" class="language-option block px-4 py-2 text-sm text-dark hover:bg-primary/10 hover:text-primary transition-all duration-200 flex items-center" data-lang="en">English</a>
+                            <a href="#" class="language-option block px-4 py-2 text-sm text-dark hover:bg-primary/10 hover:text-primary transition-all duration-200 flex items-center" data-lang="zh">中文</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Desktop AI Bot Button -->
+                    <button id="desktop-ai-bot-button" class="hidden md:flex items-center gap-2 bg-primary/10 hover:bg-primary/20 text-primary px-4 py-2 rounded-full transition-all">
+                        <i class="fa fa-comments"></i>
+                        <span data-i18n-key="chat_with_us">Chat with us</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Carousel -->
+        <section id="hero-carousel">
+            <div class="swiper hero-swiper">
+                <div class="swiper-wrapper">
+                    <!-- Slides will be populated by JS -->
+                </div>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination"></div>
+                <!-- Add Navigation -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </section>
+
+        <!-- DISCOVER Sinnkawa Section -->
+        <section id="discover" class="py-20 relative overflow-hidden" style="background: url('assets/占位图/背景1.png') center/cover no-repeat;">
+            <div class="absolute inset-0 bg-primary opacity-10"></div>
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16 fade-in">
+                    <h2 class="text-[clamp(1.75rem,4vw,2.5rem)] font-display font-bold mb-4">Discover <span class="text-primary">Sinnkawa</span></h2>
+                </div>
+                
+                <div class="flex justify-center gap-6 mb-12 fade-in">
+                    <!-- Navigation Buttons -->
+                    <button id="about-us-btn" class="discover-btn bg-primary text-white font-semibold px-6 py-3 rounded-full transition-all duration-200 hover:bg-primary-hover text-center">
+                        <span class="en-link">About Us</span>
+                        <span class="zh-link">关于我们</span>
+                    </button>
+                    
+                    <button id="sinnkawa-family-btn" class="discover-btn bg-white text-dark font-semibold px-6 py-3 rounded-full transition-all duration-200 hover:bg-gray-50 border border-light-border text-center">
+                        <span class="en-link"><span class="text-primary">Sinnkawa</span> Family</span>
+                        <span class="zh-link">新卡哇家族</span>
+                    </button>
+                    
+                    <a href="#characters" class="discover-btn bg-white text-dark font-semibold px-6 py-3 rounded-full transition-all duration-200 hover:bg-gray-50 border border-light-border text-center">
+                        <span class="en-link">Featured Characters</span>
+                        <span class="zh-link">热门角色抢先看</span>
+                    </a>
+                </div>
+                
+                <!-- Content Panels -->
+                <div id="discover-content" class="fade-in">
+                    <!-- About Us Panel -->
+                    <div id="about-us-panel" class="discover-panel p-8 rounded-2xl shadow-md">
+                        <p class="text-muted mb-6" data-i18n-key="discover_about_us"></p>
+                    </div>
+                    
+                    <!-- Sinnkawa Family Panel (Hidden by default) -->
+                    <div id="sinnkawa-family-panel" class="discover-panel p-8 rounded-2xl shadow-md hidden">
+                        <p class="text-muted mb-6" data-i18n-key="discover_family"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Characters Section -->
+        <section id="characters" class="py-20 bg-secondary relative overflow-hidden">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16 fade-in">
+                    <h2 class="text-[clamp(1.75rem,4vw,2.5rem)] font-display font-bold mb-2" data-i18n-key="characters_title"></h2>
+                    <p class="text-muted italic text-sm max-w-2xl mx-auto" data-i18n-key="characters_subtitle"></p>
+                </div>
+                
+                <!-- Character Carousel -->
+                <div id="character-introduction" class="text-center mb-12 fade-in">
+                    <div class="swiper character-carousel relative px-12">
+                        <div class="swiper-wrapper" id="character-card-container">
+                            <!-- Character cards are dynamically generated here -->
+                        </div>
+                        <!-- Add Navigation -->
+                        <div class="swiper-button-next character-next"></div>
+                        <div class="swiper-button-prev character-prev"></div>
+                    </div>
+                </div>
+                
+                <!-- Character Details -->
+                <div id="character-details" class="fade-in">
+                    <!-- Character detail content is dynamically inserted here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Products Section -->
+        <!-- Product section moved below the locations-search section -->
+
+        <!-- New Locations Search Section -->
+        <section id="locations-search" class="py-20 bg-primary/5">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4" data-i18n-key="search_locations_title"></h2>
+                <p class="text-muted max-w-2xl mx-auto mb-8" data-i18n-key="search_locations_subtitle"></p>
+                <div class="max-w-2xl mx-auto">
+                    <div class="relative">
+                        <input type="text" id="store-search-input-main" class="w-full pl-5 pr-32 py-4 rounded-full border border-gray-200 bg-white shadow-sm focus:ring-primary focus:border-primary" data-i18n-placeholder="search_placeholder_main">
+                        <button onclick="window.location.href='mendian.html'" class="absolute right-2 top-1/2 -translate-y-1/2 bg-primary hover:bg-primary-hover text-white font-semibold px-6 py-2.5 rounded-full transition-all" data-i18n-key="search_button"></button>
+                    </div>
+                    <div class="mt-4 flex flex-wrap justify-center gap-2">
+                        <a href="mendian.html" class="bg-white hover:bg-gray-100 text-dark text-sm font-medium px-4 py-2 rounded-full border border-gray-200 transition-all" data-i18n-key="tag_chinatown"></a>
+                        <a href="mendian.html" class="bg-white hover:bg-gray-100 text-dark text-sm font-medium px-4 py-2 rounded-full border border-gray-200 transition-all" data-i18n-key="tag_cafe"></a>
+                        <a href="mendian.html" class="bg-white hover:bg-gray-100 text-dark text-sm font-medium px-4 py-2 rounded-full border border-gray-200 transition-all" data-i18n-key="tag_haji_lane"></a>
+                        <a href="mendian.html" class="bg-white hover:bg-gray-100 text-dark text-sm font-medium px-4 py-2 rounded-full border border-gray-200 transition-all" data-i18n-key="tag_bw"></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Products Section (moved below locations search) -->
+        <section id="products" class="py-8 bg-secondary relative overflow-hidden">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="products-section fade-in">
+                    <div class="text-center mb-8 relative z-10">
+                        <h2 class="text-[clamp(1.5rem,3vw,2rem)] font-display font-bold mb-3" data-i18n-key="products_title"></h2>
+                        <p class="text-muted max-w-2xl mx-auto text-base" data-i18n-key="products_subtitle"></p>
+                    </div>
+                    <div class="products-grid grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="product-card p-3">
+                            <div class="product-icon"><i class="fa fa-star"></i></div>
+                            <h3 class="product-title text-sm" data-i18n-key="product_art_toys_title"></h3>
+                            <p class="product-desc text-xs" data-i18n-key="product_art_toys_desc"></p>
+                        </div>
+                        <div class="product-card p-3">
+                            <div class="product-icon"><i class="fa fa-shopping-bag"></i></div>
+                            <h3 class="product-title text-sm" data-i18n-key="product_fashion_title"></h3>
+                            <p class="product-desc text-xs" data-i18n-key="product_fashion_desc"></p>
+                        </div>
+                        <div class="product-card p-3">
+                            <div class="product-icon"><i class="fa fa-gift"></i></div>
+                            <h3 class="product-title text-sm" data-i18n-key="product_souvenirs_title"></h3>
+                            <p class="product-desc text-xs" data-i18n-key="product_souvenirs_desc"></p>
+                        </div>
+                        <div class="product-card p-3">
+                            <div class="product-icon"><i class="fa fa-handshake-o"></i></div>
+                            <h3 class="product-title text-sm" data-i18n-key="product_collaborations_title"></h3>
+                            <p class="product-desc text-xs" data-i18n-key="product_collaborations_desc"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white text-dark pt-16 pb-8 border-t border-light-border">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row gap-8 mb-12">
+                <!-- Logo -->
+                <div class="md:w-1/6">
+                    <a href="#"><img src="assets/LOGO/logoAI文件.png" alt="Sinnkawa Logo" class="h-24 mb-4 animate-bounce"></a>
+                    <p class="text-muted font-medium italic">Singapore meet Cuteness!</p>
+                </div>
+
+                <!-- Footer Links -->
+                <div class="md:w-5/6 flex flex-col md:flex-row gap-8">
+                    <!-- Discover -->
+                    <div class="md:w-1/4">
+                        <h4 class="text-lg font-semibold mb-6 text-dark" id="footer-discover-title"></h4>
+                        <ul class="space-y-4" id="footer-discover-links"></ul>
+                    </div>
+                    
+                    <!-- Stay -->
+                    <div class="md:w-1/4">
+                        <h4 class="text-lg font-semibold mb-6 text-dark" id="footer-stay-title"></h4>
+                        <ul class="space-y-4" id="footer-stay-links"></ul>
+                    </div>
+                    
+                    <!-- Get & Hours -->
+                    <div class="md:w-2/4 flex flex-col md:flex-row gap-8">
+                        <!-- Get -->
+                        <div class="md:w-1/2">
+                            <h4 class="text-lg font-semibold mb-6 text-dark" id="footer-get-title"></h4>
+                            <ul class="space-y-4" id="footer-get-links"></ul>
+                        </div>
+                        
+                        <!-- Operating Hours -->
+                        <div class="md:w-1/2">
+                            <h4 class="text-lg font-semibold mb-6 text-dark" id="footer-hours-title"></h4>
+                            <div class="text-muted" id="footer-hours-content"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-muted/20 pt-6 flex flex-col md:flex-row justify-between items-start text-muted text-xs">
+                <div class="md:w-3/5 mb-4 md:mb-0">
+                    <p class="font-bold" data-i18n-key="footer_rights_bold"></p>
+                    <p class="mt-2" data-i18n-key="footer_rights_legal"></p>
+                </div>
+                <div class="md:w-2/5 md:text-right">
+                    <p class="italic" data-i18n-key="footer_website_status"></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Latest News Popup -->
+    <div id="news-popup" class="fixed inset-0 z-[99] flex items-center justify-center hidden">
+        <div id="news-popup-backdrop" class="absolute inset-0 bg-black/50 transition-opacity duration-300 opacity-0"></div>
+        <div id="news-popup-content" class="relative bg-light rounded-2xl shadow-xl w-11/12 max-w-md m-4 p-6 opacity-0 transform scale-95 transition-all duration-300">
+            <button id="close-news-popup-btn" class="absolute top-3 right-4 text-dark hover:text-primary text-2xl z-10">&times;</button>
+            <h3 class="text-xl font-bold mb-2" data-i18n-key="news_title"></h3>
+            <p class="text-muted mb-4" data-i18n-key="news_subtitle"></p>
+            <button id="news-popup-open-btn" class="inline-block bg-accent hover:bg-accent-hover text-white font-semibold px-4 py-2 rounded-full transition-all duration-200 transform hover:scale-105" data-i18n-key="news_cta_unlock"></button>
+        </div>
+    </div>
+
+    <!-- Cafe News Modal -->
+    <div id="cafe-modal" class="fixed inset-0 z-[100] flex items-center justify-center hidden">
+        <div id="cafe-modal-backdrop" class="absolute inset-0 bg-black/60 opacity-0"></div>
+        <div id="cafe-modal-content" class="relative bg-light rounded-2xl shadow-xl w-11/12 max-w-4xl m-4 overflow-hidden transform scale-95 opacity-0">
+            <button id="close-cafe-modal-btn" class="absolute top-3 right-4 text-dark hover:text-primary text-3xl z-10">&times;</button>
+            <div class="lg:grid lg:grid-cols-2 lg:gap-4 items-center">
+                <div class="p-8 lg:p-12">
+                    <h2 class="text-3xl font-bold font-display text-dark mb-3" data-i18n-key="news_title"></h2>
+                    <p class="text-muted mb-6" data-i18n-key="news_subtitle"></p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button id="cafe-checkin-btn" class="inline-block bg-accent hover:bg-accent-hover text-white font-semibold px-6 py-3 rounded-full transition-all duration-200 transform hover:scale-105" data-i18n-key="news_cta_unlock"></button>
+                        <a href="#" onclick="openCafeMenu(); return false;" class="inline-block bg-light hover:bg-gray-50 text-dark border border-light-border font-semibold px-6 py-3 rounded-full transition-all duration-200 transform hover:scale-105" data-i18n-key="news_cta_menu"></a>
+                    </div>
+                </div>
+                <div class="h-64 lg:h-full">
+                    <img src="assets/门店照片/cafe.png" alt="Sinnkawa Themed Cafe Interior" class="w-full h-full object-cover">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cafe Check-in Modal -->
+    <div id="checkin-modal" class="fixed inset-0 z-[101] flex items-center justify-center hidden">
+        <div id="checkin-modal-backdrop" class="absolute inset-0 bg-black/60 opacity-0"></div>
+        <div id="checkin-modal-content" class="relative bg-light rounded-2xl shadow-xl w-11/12 max-w-2xl m-4 overflow-hidden transform scale-95 opacity-0">
+            <button id="close-checkin-modal-btn" class="absolute top-3 right-4 text-dark hover:text-primary text-3xl z-10">&times;</button>
+            <div class="p-6 md:p-8">
+                <h3 class="text-2xl font-bold mb-4 text-center" data-i18n-key="news_cta_unlock"></h3>
+                <div class="text-center">
+                    <img src="assets/LOGO/网站缩略图.png" alt="Cafe Check-in" class="w-full max-w-md mx-auto rounded-lg mb-4">
+                    <p class="text-muted text-sm mb-6">
+                        <span class="en-link block">Scan the QR code to check in and get your exclusive surprise!</span>
+                        <span class="zh-link block">扫描二维码打卡，领取您的专属惊喜！</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Bottom Navigation -->
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-light/90 backdrop-blur-sm shadow-[0_-2px_10px_rgba(0,0,0,0.05)] z-50">
+        <div class="container mx-auto px-4 h-16 flex justify-around items-center">
+            <a href="#" class="flex flex-col items-center text-primary">
+                <i class="fa fa-home text-xl"></i>
+                <span class="text-xs mt-1" data-i18n-key="mobile_nav_home">Home</span>
+            </a>
+            <a href="mendian.html" class="flex flex-col items-center text-muted hover:text-primary transition-colors">
+                <i class="fa fa-map-marker text-xl"></i>
+                <span class="text-xs mt-1" data-i18n-key="mobile_nav_explore">Explore</span>
+            </a>
+            <a href="#characters" class="flex flex-col items-center text-muted hover:text-primary transition-colors">
+                <img src="assets/LOGO/网站缩略图.png" alt="Characters" class="h-6 w-6">
+                <span class="text-xs mt-1" data-i18n-key="nav_characters">Characters</span>
+            </a>
+            <a href="hezuo.html" class="flex flex-col items-center text-muted hover:text-primary transition-colors">
+                <i class="fa fa-handshake-o text-xl"></i>
+                <span class="text-xs mt-1" data-i18n-key="mobile_nav_contact">Contact Us</span>
+            </a>
+            <button id="mobile-ai-btn" class="flex flex-col items-center text-muted hover:text-primary transition-colors" onclick="toggleAIBot()">
+                <i class="fa fa-comments text-xl"></i>
+                <span class="text-xs mt-1" data-i18n-key="chat_with_us">Chat with us</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main JavaScript -->
+    <script>
+    // AI Bot toggle function
+    function toggleAIBot() {
+        const aiModal = document.getElementById('bot-modal');
+        if (aiModal) {
+            aiModal.classList.toggle('hidden');
+        }
+    }
+    
+    // Open Cafe Menu in new tab
+    function openCafeMenu() {
+        const lang = i18next.language;
+        const menuUrl = lang === 'zh' ? 'assets/cafecn.png' : 'assets/cafeen.png';
+        window.open(menuUrl, '_blank');
+    }
+
+    // Ensure page starts at the top on reload
+    window.onbeforeunload = function() {
+        window.scrollTo(0, 0);
+    };
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Ensure page starts at top on initial load
+        window.scrollTo(0, 0);
+        
+        // --- Data for the page ---
+        const slideImages = [
+            'assets/门店照片/cafe.png',       // Slide 1
+            'assets/网站上线.png',             // Slide 8 (new position 2)
+            'assets/英雄手机.png',             // Slide 7 (new position 3)
+            'assets/门店照片/IMG_3606.png', // Slide 2 (new position 4)
+            'assets/门店照片/22.png',        // Slide 3 (new position 5)
+            'assets/门店照片/soul.png',      // Slide 4 (new position 6)
+            'assets/门店照片/43.png',        // Slide 5 (new position 7)
+            'assets/门店照片/68.png'         // Slide 6 (new position 8)
+        ];
+
+        const translations = {
+            en: {
+                translation: {
+                    // Page Title & Splash
+                    page_title: "Sinnkawa | Singapore's Official Ambassador of Cute, Your Adorable Lion City Adventure Begins!",
+                    splash_text: "A cute journey is about to begin.",
+                    
+                    // Navigation
+                    nav_locations: "Locations",
+                    nav_news: "Latest News",
+                    nav_characters: "Characters",
+                    nav_products: "Products",
+                    nav_cooperation: "Business Cooperation",
+                    chat_with_us: "Chat with us",
+
+                    // Hero Carousel Slides
+                    slide1_title: "Singapore’s First Merlion-Themed Café｜Sinnkawa Café Now Open",
+                    slide1_subtitle: "Chef Morio is ready—our character café is now open! Come visit, snap photos, and enjoy an immersive world of cuteness.",
+                    slide2_title: "Building the Sinnkawa Universe",
+                    slide2_subtitle: "Our official site is coming soon—explore the full character multiverse and exclusive digital drops.",
+                    slide3_title: "Meet the Sinnkawa Family",
+                    slide3_subtitle: "Our Merlion characters have arrived—find them across the city in spontaneous and joyful encounters.",
+                    slide4_title: "Chinatown Flagship",
+                    slide4_subtitle: "The birthplace of Sinnkawa—featuring character zones, exclusive merch, and rich Singapore vibes. (Psst: there's a hidden café photo spot on the 3rd floor!)",
+                    slide5_title: "Haji Lane 22",
+                    slide5_subtitle: "Our very first Haji Lane store—gentle, cozy, and a must-visit for every Sinnkawa fan.",
+                    slide6_title: "Haji Lane 62 – Soul Art Studio",
+                    slide6_subtitle: "A space where art meets story. Explore our characters through postcards, mini exhibitions, and workshops.",
+                    slide7_title: "Haji Lane 43",
+                    slide7_subtitle: "The visual heart of Sinnkawa—every wall tells a story. A dream stop for aesthetic lovers.",
+                    slide8_title: "Haji Lane 68",
+                    slide8_subtitle: "Step into a hand-drawn dimension—Sinnkawa’s boldest and most creative spatial experience yet.",
+
+                    // Discover Section
+                    discover_about_us: "<strong>Born in 2024 as a homegrown Singapore IP operator, <span class=\"text-primary\">Sinnkawa</span> is dedicated to building a professional character brand.</strong><br>What we create are companions that live in your heart. In the world of <span class=\"text-primary\">Sinnkawa</span>, 'cute' isn't just a fleeting trend—it's a long‑lasting companionship. We don't chase fads; we build a complete universe where every character has a story and warmth. From a collectible piece to a warm hug, <span class=\"text-primary\">Sinnkawa</span> is committed to being the most adorable and healing partner in your daily life.",
+                    discover_family: "<strong>Every character holds a piece of Singapore's soul.</strong><br>The <span class=\"text-primary\">Sinnkawa</span> family is inspired by the vibrant, diverse pulse of this tropical island. The Merlion, <strong>Merlion</strong>, is our superstar—crowned, multilingual, and a natural optimist. The surf-loving <strong>Otata</strong> carries the scent of Singapore's sea breeze... Using a language of \"cute aesthetics + quality design,\" we bring these characters, rich with the city's memories, to you. Every collection, interaction, and share is a unique memory of you growing with them.",
+
+                    // Characters Section
+                    characters_title: "Meet our Family Member!",
+                    characters_subtitle: "(Our family is always growing, stay tuned for new members!)",
+                    char_merlion_name: "Merlion",
+                    char_merlion_title: "👑 Chief Diplomat of <span class=\"text-primary\">Sinnkawa</span> Kingdom | Heartwarming Smile | Walking Translator",
+                    char_merlion_desc: `Born in the heart of the Lion City with a royal aura. Merlion not only has the legendary bloodline of a Merlion but also a heart that melts the world with a smile.\n\n🎸 <strong>Secret Talent:</strong> A master at playing the guitar and singing, said to be able to clear away any gloomy clouds.\n💖 <strong>Daily Warmth:</strong> He is the soul of every <span class=\"text-primary\">Sinnkawa</span> store, always greeting every explorer with the warmest welcome.\n<strong>His Catchphrase:</strong> “Welcome home! Let's be 100% cute today!”`,
+                    char_otata_name: "Otata",
+                    char_otata_title: "🐚 Ocean Energy Girl | Pro Surfer | Energetic Foodie",
+                    char_otata_desc: `Otata was born from the Singapore sea breeze, filled with salty courage and a sweet smile. She's forever chasing the next wave and the next seafood feast!\n\n🏄‍♀️ <strong>Highlight Moment:</strong> Effortlessly rides the waves, the brightest princess of the sea.\n🍹 <strong>Special Drink:</strong> Her "Otata Passion Pop" is a special creation, bubbling with the taste of summer and adventure.\n<strong>Her Motto:</strong> “Don't be afraid to dive into the waves of life—that's where the fun is!”`,
+                    char_dayi_name: "Merlina",
+                    char_dayi_title: "☀️ A Non-Stop Engine of Joy | All-Star Athlete | Trouble Crusher",
+                    char_dayi_desc: `Merlina is like a little sun, always running, jumping, and shining. For her, as long as she's moving, worries can never catch up!\n\n🎽 <strong>Sports Manual:</strong> Skateboarding, badminton, basketball... there's no sport she can't master.\n🥤 <strong>Energy Boost:</strong> Her exclusive "Merlina's Minty Fizz" is as refreshing and powerful as she is.\n<strong>Her Battle Cry:</strong> “Let's go! Leave all the bad vibes behind!”`,
+
+                    // Products Section
+                    products_title: "Certified Cute in Every Category",
+                    products_subtitle: "From a warm hug to every heartfelt moment, we fill your daily life with delightful designs.",
+                    products_core_series_title: "Core Series",
+                    products_special_series_title: "Special Series",
+                    product_art_toys_title: "Art, Toys & Collectibles",
+                    product_art_toys_desc: "Unique art toys and limited collectibles for every fan.",
+                    product_fashion_title: "Fashion & Accessories",
+                    product_fashion_desc: "Wear your favorite characters and embrace cuteness daily.",
+                    product_home_lifestyle_title: "Home & Lifestyle",
+                    product_home_lifestyle_desc: "Let the warm magic of <span class=\"text-primary\">Sinnkawa</span> fill every corner of your home. Whether it's a soft cushion or a charming dining set, we are dedicated to creating a healing and cozy atmosphere for you.",
+                    product_souvenirs_title: "Exclusive Souvenirs",
+                    product_souvenirs_desc: "Specially‑designed souvenirs inspired by the Lion City.",
+                    product_custom_gifts_title: "Customized Gift Sets",
+                    product_custom_gifts_desc: "Present a one-of-a-kind gift to that special someone. For holidays, celebrations, or just because, we can help you customize a <span class=\"text-primary\">Sinnkawa</span>-style gift set that makes every occasion feel special.",
+                    product_collaborations_title: "IP & Collaborations",
+                    product_collaborations_desc: "Exciting crossovers and brand collaborations.",
+
+                    // News & Cafe Modal
+                    news_title: "Ding! You've Got an Invitation from <span class=\"text-primary\">Sinnkawa</span>'s Dreamy Café!",
+                    news_subtitle: "Step into a world wrapped in cuteness and desserts! Our magical café is officially open, come taste desserts that smile and dreamy drinks that glow!",
+                    news_cta_unlock: "Unlock Cafe Opening Surprise!",
+                    news_cta_menu: "Get Cafe Menu",
+
+                    // Locations Search Section
+                    search_locations_title: "Real Places, Real Cuteness",
+                    search_locations_subtitle: "Search for our stores or click the popular tags to explore.",
+                    search_placeholder_main: "e.g., Chinatown, cafe...",
+                    search_button: "Search",
+                    tag_chinatown: "Chinatown",
+                    tag_cafe: "Cafe",
+                    tag_haji_lane: "Haji Lane",
+                    tag_bw: "Black & White",
+                    
+                    // Footer & Modals
+                    footer_rights_bold: "©2025 Sinnkawa Singapore. All Rights Reserved.",
+                    footer_rights_legal: "All visual assets of the Sinnkawa brand (including but not limited to character images, designs, and copy) are protected by copyright and trademark law.",
+                    footer_website_status: "Coming Soon: The official flagship website (www.sinnkawa.com) is under construction.",
+                    mobile_nav_home: "Home", 
+                    mobile_nav_explore: "Explore", 
+                    mobile_nav_contact: "Contact"
+                }
+            },
+            zh: {
+                translation: {
+                    // 页面标题 & 闪屏
+                    page_title: "Sinnkawa | 新加坡官方授权可爱大使，你的萌趣狮城之旅由此开启！",
+                    splash_text: "注意！一大波可爱能量正在登陆新加坡！",
+
+                    // 导航栏
+                    nav_locations: "门店据点",
+                    nav_news: "最新消息",
+                    nav_characters: "家族成员",
+                    nav_products: "产品系列",
+                    nav_cooperation: "商务合作",
+                    chat_with_us: "在线咨询",
+
+                    // Hero Carousel Slides
+                    slide1_title: "新加坡首家鱼尾狮主题Cafe｜Sinnkawa Café 正式开业啦",
+                    slide1_subtitle: "我们的大厨莫里奥已经准备就绪——Sinnkawa 咖啡厅现已启航！欢迎打卡、预约聚会，来一场沉浸式的可爱体验。",
+                    slide2_title: "Sinnkawa 可爱宇宙建设中",
+                    slide2_subtitle: "我们的品牌官网即将上线，敬请期待更完整的角色世界观和更多线上专属活动！",
+                    slide3_title: "Sinnkawa 家族",
+                    slide3_subtitle: "鱼尾狮家族首次集结，在新加坡街头与你不期而遇。",
+                    slide4_title: "牛车水旗舰店",
+                    slide4_subtitle: "作为 Sinnkawa 品牌的起点，这里集结了角色体验、文创商品与最地道的新加坡城市风格。（偷偷告诉你：3楼cafe有打卡圣地哦）",
+                    slide5_title: "哈芝巷 22 号",
+                    slide5_subtitle: "我们的第一家哈芝巷门店，风格温柔治愈，是每一位角色粉丝的必访之地。",
+                    slide6_title: "Soul Art 文艺店",
+                    slide6_subtitle: "一间将创作、灵感与角色融合的空间。欢迎参与明信片、角色体验等创意活动。",
+                    slide7_title: "哈芝巷 43",
+                    slide7_subtitle: "Sinnkawa 的主题核心空间，每一面墙都讲故事，是视觉系玩家的打卡胜地。",
+                    slide8_title: "哈芝巷 68",
+                    slide8_subtitle: "像走进一幅手绘立体画，这里是 Sinnkawa 最具风格张力的空间展览店。",
+
+                    // 发现Sinnkawa
+                    discover_about_us: "<strong>我们是一家新兴的新加坡本土IP运营公司，<span class=\"text-primary\">Sinnkawa</span>于2024年成立，致力于打造专业的本土IP品牌。</strong><br>我们创造的，是能住进你心里的伙伴。在 <span class=\"text-primary\">Sinnkawa</span> 的世界里，“可爱”不是稍纵即逝的潮流，而是一种长情的陪伴。我们不追热点，而是用心构建一个完整的世界观，让每个角色都有自己的故事和温度。从一件值得收藏的周边，到一个温暖的拥抱，<span class=\"text-primary\">Sinnkawa</span> 致力于成为你日常生活中，那个最萌、最治愈的伙伴。",
+                    discover_family: "<strong>每个角色，都藏着一小片新加坡的灵魂。</strong><br><span class=\"text-primary\">Sinnkawa</span> 家族的灵感，源自新加坡这座热带岛屿的多元脉搏。鱼尾狮 <strong>莫里奥 (Merlion)</strong> 是我们的大明星，他头戴皇冠，精通多国语言，是天生的乐天派；热爱冲浪的 <strong>奥塔塔 (Otata)</strong>，身上有新加坡的海风味道... 我们用“萌系美学+质感设计”的语言，将这些承载着狮城记忆的角色带到你身边。每一次收藏、互动和分享，都是你和他们共同成长的独家记忆。",
+
+                    // 角色介绍
+                    characters_title: "认识我们的家族成员！",
+                    characters_subtitle: "（家族持续壮大中，敬请期待新成员！）",
+                    char_merlion_name: "莫里奥 Merlion",
+                    char_merlion_title: "👑 <span class=\"text-primary\">Sinnkawa</span> 王国首席外交官｜微笑暖男｜行走的语言通",
+                    char_merlion_desc: `诞生于狮城之心，自带王者光环。莫里奥不仅拥有鱼尾狮的传奇血统，更有着一颗用微笑融化世界的心。\n\n🎸 <strong>隐藏技能:</strong> 吉他弹唱是他的拿手好戏，据说能让不开心的云都散开。\n💖 <strong>暖心日常:</strong> 他是每家 <span class=\"text-primary\">Sinnkawa</span> 门店的灵魂人物，总会用最温暖的问候迎接每一位探险家。\n<strong>他的口头禅:</strong> “欢迎回家！今天也要可爱满分哦！”`,
+                    char_otata_name: "奥塔塔 Otata",
+                    char_otata_title: "🐚 海洋能量少女｜冲浪好手｜元气美食家",
+                    char_otata_desc: `奥塔塔是乘着新加坡海风而生的女孩，骨子里充满了咸咸的勇气和甜甜的微笑。她永远在追逐下一朵浪花，和下一顿海鲜大餐的路上！\n\n🏄‍♀️ <strong>高光时刻:</strong> 轻松驾驭各种高难度冲浪动作，是大海里最闪亮的公主。\n🍹 <strong>特调饮品:</strong> 《奥塔塔的热情气泡》是她的灵感特调，充满了夏日和冒险的味道。\n<strong>她的座右铭:</strong> “别怕，跳进生活的浪里，才够刺激！”`,
+                    char_dayi_name: "莫里娜 Merlina",
+                    char_dayi_title: "☀️ 移动的快乐永动机｜全能运动少女｜烦恼粉碎机",
+                    char_dayi_desc: `莫里娜就像一颗小太阳，永远在奔跑、跳跃、闪闪发光。对她来说，只要身体在动，烦恼就永远追不上！\n\n🎽 <strong>运动图鉴:</strong> 滑板、羽毛球、篮球... 只要是有趣的运动，就没有她不擅长的。\n🥤 <strong>能量补给:</strong> 专属汽水《莫里娜的薄荷果泡泡》，喝一口就像她本人一样，清爽又充满力量！\n<strong>她的战斗宣言:</strong> “冲啊！把坏心情远远甩在身后！”`,
+
+                    // 产品系列
+                    products_title: "每个品类都是可爱认证",
+                    products_subtitle: "从一个温暖的拥抱到每一次心动，我们用好设计填满你的日常",
+                    products_core_series_title: "核心系列",
+                    products_special_series_title: "特色系列",
+                    product_art_toys_title: "艺术潮玩 & 珍藏品",
+                    product_art_toys_desc: "独特的艺术玩具与限量珍藏品，献给每个收藏爱好者。",
+                    product_fashion_title: "潮流穿搭 & 配饰",
+                    product_fashion_desc: "把喜欢的角色穿在身上，每天都可爱。",
+                    product_home_lifestyle_title: "生活良品 & 家居",
+                    product_home_lifestyle_desc: "让 <span class=\"text-primary\">Sinnkawa</span> 的温暖魔法，遍布家的每一个角落。无论是柔软的抱枕，还是陪伴你用餐的可爱餐具，我们致力于为你创造充满治愈感的家居时光。",
+                    product_souvenirs_title: "独家伴手礼 & 新加坡限定",
+                    product_souvenirs_desc: "灵感来自狮城的特别伴手礼。",
+                    product_custom_gifts_title: "定制心意 & 专属礼盒",
+                    product_custom_gifts_desc: "为最重要的TA，献上一份独一无二的专属心意。无论是节日庆祝还是日常惊喜，我们都能帮你定制充满<span class=\"text-primary\">Sinnkawa</span>风格的礼盒，让每一次送礼都充满仪式感。",
+                    product_collaborations_title: "IP联名 & 跨界合作",
+                    product_collaborations_desc: "跨界联名与品牌合作，惊喜不断。",
+
+                    // 最新消息 & 咖啡厅弹窗
+                    news_title: "叮！你有一份来自 <span class=\"text-primary\">Sinnkawa</span> 梦幻咖啡馆的邀请函！",
+                    news_subtitle: "闯入一个被可爱和甜品包裹的世界！我们的魔法咖啡馆正式开业，来品尝会微笑的甜点，和会发光的梦幻特调吧！",
+                    news_cta_unlock: "解锁Cafe开业限时惊喜",
+                    news_cta_menu: "获取一本新加坡最萌菜单",
+                    
+                    // 门店搜索部分
+                    search_locations_title: "实体门店 · 实打实的可爱",
+                    search_locations_subtitle: "搜索我们的门店或点击热门标签进行探索。",
+                    search_placeholder_main: "例如：牛车水、咖啡...",
+                    search_button: "搜索",
+                    tag_chinatown: "牛车水",
+                    tag_cafe: "咖啡",
+                    tag_haji_lane: "哈芝巷",
+                    tag_bw: "黑白",
+
+                    footer_rights_bold: "©2025 Sinnkawa Singapore. All Rights Reserved.",
+                    footer_rights_legal: "Sinnkawa 品牌的所有视觉资产（包括但不限于角色形象、设计、文案）均受版权与商标法保护，侵权必究。",
+                    footer_website_status: "即将上线：官方旗舰网站 (www.sinnkawa.com) 正在全力建造中。",
+                    mobile_nav_home: "首页", 
+                    mobile_nav_explore: "探索", 
+                    mobile_nav_contact: "联系我们"
+                }
+            }
+        };
+        
+        const characterData = [
+            { id: 'merlion', nameKey: 'char_merlion_name', titleKey: 'char_merlion_title', descKey: 'char_merlion_desc', imgSrc: 'assets/角色照片/莫莫.png' },
+            { id: 'dayi', nameKey: 'char_dayi_name', titleKey: 'char_dayi_title', descKey: 'char_dayi_desc', imgSrc: 'assets/角色照片/莫妞.png' },
+            { id: 'otata', nameKey: 'char_otata_name', titleKey: 'char_otata_title', descKey: 'char_otata_desc', imgSrc: 'assets/角色照片/乌塔塔.png' }
+        ];
+        
+        const footerLinksData = {
+            discover: {
+                title: { en: "Discover <span class='text-primary'>Sinnkawa</span>", zh: "探索 <span class='text-primary'>Sinnkawa</span>" },
+                links: [
+                    { href: "#characters", icon: "fa-paw", text: { en: "<span class='text-primary'>Sinnkawa</span>'s Members", zh: "角色故事" } },
+                    { href: "mendian.html", icon: "fa-map-marker", text: { en: "Locations", zh: "线下门店" } },
+                    { href: "#products", icon: "fa-shopping-bag", text: { en: "Product Categories", zh: "零售类别" } },
+                    { href: "#", icon: "fa-bullhorn", text: { en: "What's New", zh: "品牌动态" }, isButton: true, buttonId: "news-footer-button" }
+                ]
+            },
+            stay: {
+                title: { en: "Get Latest Updates", zh: "获取最新品牌资讯" },
+                links: [
+                    { href: "https://www.xiaohongshu.com/user/profile/664f08440000000003030e90", icon: "fa-book", text: { en: "RedNote", zh: "小红书" } },
+                    { href: "https://www.instagram.com/sinnkawa_official/", icon: "fa-instagram", text: { en: "Instagram", zh: "Instagram" } },
+                    { href: "https://www.tiktok.com/@sinnkawasingapore", icon: "fa-music", text: { en: "TikTok", zh: "TikTok" } },
+                    { href: "https://www.threads.net/@sinnkawa_official", icon: "fa-comment", text: { en: "Threads", zh: "Threads" } }
+                ]
+            },
+            get: {
+                title: { en: "Stay Connected!", zh: "联系我们" },
+                links: [
+                    { href: "javascript:void(0);", icon: "fa-comments", text: { en: "Chat with AI Assistant", zh: "与AI助手聊天" }, onclick: "toggleAIBot()" },
+                    { href: "https://wa.me/6597759906", icon: "fa-whatsapp", text: { en: "WhatsApp", zh: "WhatsApp" } },
+                    { href: "hezuo.html", icon: "fa-handshake-o", text: { en: "Business Cooperation", zh: "商务合作" } },
+                    { href: "https://forms.gle/a6PjifbkM7ovz42Z8", icon: "fa-pencil-square-o", text: { en: "Submit an Enquiry", zh: "提交问题表格" } }
+                ]
+            },
+            hours: {
+                title: { en: "Operating Hours", zh: "营业时间" },
+                content: {
+                    en: "Stores: 10am - 10pm<br>Cafe: 12pm - 8pm<br>Open on public holidays",
+                    zh: "门店: 10:00 - 22:00<br>咖啡厅: 12:00 - 20:00<br>公共假期照常营业"
+                }
+            }
+        };
+
+        const botResponses = {
+            "hello": { en: "Hello! I'm KAKAWAWA, your AI assistant. How can I help you today?", zh: "你好！我是新小哇，你的AI助手。有什么可以帮你的吗？" },
+            "hi": { en: "Hi there! I'm KAKAWAWA. What can I do for you?", zh: "你好！我是新小哇。有什么可以帮你的吗？" },
+            "store hours": { en: "Our stores are generally open from 10am to 10pm daily, and the cafe is open from 12pm to 8pm.", zh: "我们的门店通常每天从上午10点营业到晚上10点，咖啡厅的营业时间是中午12点到晚上8点。" },
+            "where are you located": { en: "We have several locations in Singapore, including Chinatown and multiple stores in Haji Lane. Check our Locations page for details!", zh: "我们在新加坡有多家分店，包括牛车水和哈芝巷的多家门店。详情请查看我们的门店据点页面！" },
+            "cafe menu": { en: "You can get our cafe menu by clicking the 'Get Cafe Menu' button in the Latest News section.", zh: "你可以点击最新消息部分的'获取一本新加坡最萌菜单'按钮来获取我们的咖啡厅菜单。" },
+            "merchandise": { en: "We offer a wide range of merchandise including art toys, fashion accessories, home goods, and exclusive souvenirs!", zh: "我们提供各种各样的周边产品，包括艺术潮玩、时尚配饰、生活良品和独家伴手礼！" },
+            "default": { en: "I'm KAKAWAWA, here to help with questions about <span class=\"text-primary\">Sinnkawa</span> stores, products, and characters. Feel free to ask me anything!", zh: "我是新小哇，随时为你解答关于<span class=\"text-primary\">Sinnkawa</span>门店、产品和角色的问题。有什么想问的尽管说！" }
+        };
+
+        // --- Global Variables ---
+        let characterSwiper;
+        let heroSwiper;
+
+        // --- Initialization ---
+        function initApp() {
+            i18next.init({
+                resources: translations,
+                fallbackLng: 'en',
+                lng: 'en' // Force English as default
+            }).then(() => {
+                document.documentElement.lang = i18next.language;
+                updateAllContent();
+                initHeroSwiper(); // Initialize swiper after content is ready
+            });
+
+            i18next.on('languageChanged', (lng) => {
+                document.documentElement.lang = lng;
+                updateAllContent();
+            });
+
+            document.querySelectorAll('.language-option').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    i18next.changeLanguage(e.currentTarget.getAttribute('data-lang'));
+                });
+            });
+
+            initSplash();
+            initScrollBehaviors();
+            initCharacterCarousel();
+            initCafeModal();
+            initCheckinModal();
+            initNewsPopup(); // show latest news popup
+            initCharacterDetails();
+            initAIBot();
+            initDiscoverSection();
+        }
+        
+        // --- Content Update Functions ---
+        function updateAllContent() {
+            updateStaticContent();
+            updateDynamicContent();
+        }
+
+        function updateStaticContent() {
+            document.querySelectorAll('[data-i18n-key]').forEach(el => {
+                const key = el.getAttribute('data-i18n-key');
+                el.innerHTML = i18next.t(key);
+            });
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                el.placeholder = i18next.t(key);
+            });
+        }
+        
+        function updateDynamicContent() {
+            updateHeroSwiperContent();
+            populateCharacterCards();
+            populateFooterLinks();
+            if (characterSwiper) characterSwiper.update();
+            const activeCharId = document.querySelector('.avatar-item.active')?.getAttribute('data-character');
+            if (activeCharId) {
+                showCharacterDetail(activeCharId);
+            }
+        }
+
+        // --- Component Initializers ---
+        function initSplash() {
+            const splashScreen = document.getElementById('splash-screen');
+            if (splashScreen) {
+                setTimeout(() => {
+                    splashScreen.style.opacity = '0';
+                    setTimeout(() => {
+                        splashScreen.style.display = 'none';
+                    }, 800); // Match transition duration
+                }, 2500); // Show splash for 2.5 seconds
+            }
+        }
+        
+        function initScrollBehaviors() {
+            const backToTopButton = document.getElementById('back-to-top');
+            window.addEventListener('scroll', () => {
+                backToTopButton.classList.toggle('opacity-0', window.scrollY <= 300);
+                backToTopButton.classList.toggle('invisible', window.scrollY <= 300);
+            });
+            backToTopButton.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+        }
+
+        // --- Hero Swiper Functions ---
+        function initHeroSwiper() {
+             if (heroSwiper) {
+                 heroSwiper.destroy(true, true);
+             }
+             heroSwiper = new Swiper(".hero-swiper", {
+                 loop: true,
+                 autoplay: {
+                     delay: 4500,
+                     disableOnInteraction: false,
+                 },
+                 pagination: {
+                     el: ".swiper-pagination",
+                     clickable: true,
+                 },
+                 navigation: {
+                     nextEl: ".swiper-button-next",
+                     prevEl: ".swiper-button-prev",
+                 },
+                 effect: "fade",
+                 fadeEffect: {
+                     crossFade: true
+                 },
+             });
+             updateHeroSwiperContent();
+        }
+
+        function updateHeroSwiperContent() {
+            const swiperWrapper = document.querySelector('.hero-swiper .swiper-wrapper');
+            if (!swiperWrapper) return;
+
+            let slidesHTML = '';
+            for (let i = 0; i < slideImages.length; i++) {
+                const slideIndex = i + 1; 
+                slidesHTML += `
+                    <div class="swiper-slide" style="background-image: url('${slideImages[i]}')">
+                        <div class="slide-overlay">
+                            <div class="text-overlay">
+                                <h1 class="slide-title">${i18next.t(`slide${slideIndex}_title`)}</h1>
+                                <p class="slide-subtitle">${i18next.t(`slide${slideIndex}_subtitle`)}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            swiperWrapper.innerHTML = slidesHTML;
+
+            if (heroSwiper) {
+                heroSwiper.update(); 
+                heroSwiper.slideToLoop(0); 
+            }
+        }
+        
+        // --- Character Section Functions ---
+        function initCharacterCarousel() {
+            characterSwiper = new Swiper('.character-carousel', {
+                loop: true,
+                grabCursor: true,
+                slidesPerView: 3,
+                spaceBetween: 20,
+                centeredSlides: true,
+                autoplay: { delay: 3000, disableOnInteraction: false, pauseOnMouseEnter: true },
+                navigation: { nextEl: '.character-next', prevEl: '.character-prev' },
+                breakpoints: { 640: { slidesPerView: 3, spaceBetween: 20 }, 1024: { slidesPerView: 3, spaceBetween: 30 } }
+            });
+        }
+
+        function populateCharacterCards() {
+            const container = document.getElementById('character-card-container');
+            if (!container) return;
+            container.innerHTML = characterData.map(char => `
+                <div class="swiper-slide">
+                    <div class="avatar-item text-center cursor-pointer" data-character="${char.id}">
+                        <img src="${char.imgSrc}" alt="${i18next.t(char.nameKey)}" class="w-24 h-24 mx-auto rounded-full shadow-lg mb-4 object-cover transition-all duration-300">
+                        <h4 class="font-bold text-dark text-center">${i18next.t(char.nameKey)}</h4>
+                    </div>
+                </div>
+            `).join('');
+            
+            setTimeout(() => {
+                const firstAvatar = document.querySelector('.avatar-item');
+                if (firstAvatar) {
+                    firstAvatar.classList.add('active');
+                    showCharacterDetail(firstAvatar.getAttribute('data-character'));
+                }
+            }, 100);
+            
+            document.querySelectorAll('.avatar-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    document.querySelectorAll('.avatar-item').forEach(avatar => avatar.classList.remove('active'));
+                    item.classList.add('active');
+                    showCharacterDetail(item.getAttribute('data-character'));
+                });
+            });
+        }
+
+        function initCharacterDetails() {
+            const detailsContainer = document.getElementById('character-details');
+            if (!detailsContainer) return;
+            detailsContainer.innerHTML = `
+                <div class="character-detail active" id="detail-container">
+                    <div class="flex flex-col md:flex-row items-center gap-8">
+                        <div class="w-full md:w-1/3">
+                            <img id="detail-avatar" src="" alt="" class="w-40 h-40 mx-auto rounded-full shadow-lg object-cover border-4 border-primary">
+                        </div>
+                        <div class="w-full md:w-2/3 text-center md:text-left">
+                            <h2 id="detail-name" class="text-2xl font-bold text-primary mb-2"></h2>
+                            <p id="detail-title" class="text-sm font-semibold text-muted mb-4"></p>
+                            <div id="detail-content" class="text-muted leading-relaxed whitespace-pre-line"></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function showCharacterDetail(characterId) {
+            const character = characterData.find(char => char.id === characterId);
+            if (!character) return;
+            
+            const detailsContainer = document.getElementById('detail-container');
+            if (!detailsContainer) return;
+            
+            document.getElementById('detail-avatar').src = character.imgSrc;
+            document.getElementById('detail-avatar').alt = i18next.t(character.nameKey);
+            document.getElementById('detail-name').innerHTML = i18next.t(character.nameKey);
+            document.getElementById('detail-title').innerHTML = i18next.t(character.titleKey);
+            document.getElementById('detail-content').innerHTML = i18next.t(character.descKey);
+            
+            detailsContainer.classList.remove('active');
+            setTimeout(() => detailsContainer.classList.add('active'), 10);
+        }
+
+        // --- Footer & Modal Functions ---
+        function populateFooterLinks() {
+            const lang = i18next.language;
+            
+            document.getElementById('footer-discover-title').innerHTML = footerLinksData.discover.title[lang];
+            document.getElementById('footer-discover-links').innerHTML = footerLinksData.discover.links.map(link => {
+                const linkContent = `<i class="fa ${link.icon} w-5 text-center text-primary"></i><span>${link.text[lang]}</span>`;
+                if (link.isButton) {
+                    return `<li><button id="${link.buttonId}" class="flex items-center gap-2 text-dark hover:text-primary transition-all duration-200">${linkContent}</button></li>`;
+                }
+                return `<li><a href="${link.href}" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-dark hover:text-primary transition-all duration-200">${linkContent}</a></li>`;
+            }).join('');
+            
+            document.getElementById('footer-stay-title').textContent = footerLinksData.stay.title[lang];
+            document.getElementById('footer-stay-links').innerHTML = footerLinksData.stay.links.map(link => `<li><a href="${link.href}" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-dark hover:text-primary transition-all duration-200"><i class="fa ${link.icon} w-5 text-center text-primary"></i><span>${link.text[lang]}</span></a></li>`).join('');
+            
+            document.getElementById('footer-get-title').textContent = footerLinksData.get.title[lang];
+            document.getElementById('footer-get-links').innerHTML = footerLinksData.get.links.map(link => {
+                const onclick = link.onclick ? `onclick="${link.onclick}"` : '';
+                return `<li><a href="${link.href}" ${onclick} class="flex items-center gap-2 text-dark hover:text-primary transition-all duration-200"><i class="fa ${link.icon} w-5 text-center text-primary"></i><span>${link.text[lang]}</span></a></li>`;
+            }).join('');
+            
+            document.getElementById('footer-hours-title').textContent = footerLinksData.hours.title[lang];
+            document.getElementById('footer-hours-content').innerHTML = footerLinksData.hours.content[lang];
+            
+            document.querySelector('#news-footer-button')?.addEventListener('click', openCafeModal);
+        }
+        
+        function openCafeModal() {
+            const modal = document.getElementById('cafe-modal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    document.getElementById('cafe-modal-backdrop').classList.add('opacity-100');
+                    document.getElementById('cafe-modal-content').classList.add('scale-100', 'opacity-100');
+                }, 10);
+            }
+        }
+
+        function openCafeNews() {
+            try {
+                const lang = i18next.language || 'en';
+                const imageUrl = (lang && lang.startsWith('zh')) ? 'assets/cafenewscn.png' : 'assets/cafenews.png';
+                window.open(imageUrl, '_blank');
+            } catch (e) {
+                window.open('assets/cafenews.png', '_blank');
+            }
+        }
+
+        function initCafeModal() {
+            const modal = document.getElementById('cafe-modal');
+            const closeModalBtn = document.getElementById('close-cafe-modal-btn');
+            const modalBackdrop = document.getElementById('cafe-modal-backdrop');
+
+            function close() {
+                if (!modal) return;
+                modalBackdrop.classList.remove('opacity-100');
+                document.getElementById('cafe-modal-content').classList.remove('scale-100', 'opacity-100');
+                setTimeout(() => modal.classList.add('hidden'), 300);
+            }
+
+            document.getElementById('news-nav-button')?.addEventListener('click', openCafeModal);
+            closeModalBtn?.addEventListener('click', close);
+            modalBackdrop?.addEventListener('click', close);
+        }
+
+        function initCheckinModal() {
+            const modal = document.getElementById('checkin-modal');
+            const openTrigger = document.getElementById('cafe-checkin-btn');
+            const closeModalBtn = document.getElementById('close-checkin-modal-btn');
+            const modalBackdrop = document.getElementById('checkin-modal-backdrop');
+
+            function open() {
+                if (!modal) return;
+                document.getElementById('cafe-modal')?.classList.add('hidden');
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    modalBackdrop.classList.add('opacity-100');
+                    document.getElementById('checkin-modal-content').classList.add('scale-100', 'opacity-100');
+                }, 10);
+            }
+
+            function close() {
+                if (!modal) return;
+                modalBackdrop.classList.remove('opacity-100');
+                document.getElementById('checkin-modal-content').classList.remove('scale-100', 'opacity-100');
+                setTimeout(() => modal.classList.add('hidden'), 300);
+            }
+
+            openTrigger?.addEventListener('click', function() {
+                document.getElementById('cafe-modal')?.classList.add('hidden');
+                openCafeNews();
+            });
+            closeModalBtn?.addEventListener('click', close);
+            modalBackdrop?.addEventListener('click', close);
+        }
+
+        function initAIBot() {
+            const desktopBotButton = document.getElementById('desktop-ai-bot-button');
+            const botModal = document.getElementById('bot-modal');
+            const botBackdrop = document.getElementById('bot-modal-backdrop');
+            const botContent = document.getElementById('bot-modal-content');
+            const closeBotModalBtn = document.getElementById('close-bot-modal-btn');
+            const botInput = document.getElementById('bot-input');
+            const botSend = document.getElementById('bot-send');
+            const botMessages = document.getElementById('bot-messages');
+            const botWhatsapp = document.getElementById('bot-whatsapp');
+            const botForm = document.getElementById('bot-form');
+
+            function openBot() {
+                if (!botModal) return;
+                botModal.classList.remove('hidden');
+                setTimeout(() => {
+                    botBackdrop.classList.add('opacity-100');
+                    botContent.classList.add('scale-100', 'opacity-100');
+                    botInput.focus();
+                }, 10);
+            }
+
+            function closeBot() {
+                if (!botModal) return;
+                botBackdrop.classList.remove('opacity-100');
+                botContent.classList.remove('scale-100', 'opacity-100');
+                setTimeout(() => botModal.classList.add('hidden'), 300);
+            }
+
+            function sendMessage(message) {
+                if (!message.trim()) return;
+                
+                const userMessageEl = document.createElement('div');
+                userMessageEl.className = 'user-message';
+                userMessageEl.textContent = message;
+                botMessages.appendChild(userMessageEl);
+                
+                botInput.value = '';
+                botMessages.scrollTop = botMessages.scrollHeight;
+                
+                setTimeout(() => {
+                    const response = getBotResponse(message);
+                    const botMessageEl = document.createElement('div');
+                    botMessageEl.className = 'bot-message';
+                    botMessageEl.textContent = response;
+                    botMessages.appendChild(botMessageEl);
+                    botMessages.scrollTop = botMessages.scrollHeight;
+                }, 500);
+            }
+
+            function getBotResponse(message) {
+                const lowerMessage = message.toLowerCase();
+                const lang = i18next.language;
+                for (const [keyword, responses] of Object.entries(botResponses)) {
+                    if (lowerMessage.includes(keyword)) return responses[lang] || responses.en;
+                }
+                return botResponses.default[lang] || botResponses.default.en;
+            }
+
+            desktopBotButton?.addEventListener('click', openBot);
+            closeBotModalBtn?.addEventListener('click', closeBot);
+            botBackdrop?.addEventListener('click', closeBot);
+            botSend?.addEventListener('click', () => sendMessage(botInput.value));
+            botInput?.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendMessage(botInput.value); });
+            botWhatsapp?.addEventListener('click', () => window.open('https://wa.me/6597759906', '_blank'));
+            botForm?.addEventListener('click', () => window.open('https://forms.gle/a6PjifbkM7ovz42Z8', '_blank'));
+        }
+
+        function initNewsPopup() {
+            const popup = document.getElementById('news-popup');
+            if (!popup) return;
+            const backdrop = document.getElementById('news-popup-backdrop');
+            const content = document.getElementById('news-popup-content');
+            const closeBtn = document.getElementById('close-news-popup-btn');
+            const openBtn = document.getElementById('news-popup-open-btn');
+
+            function open() {
+                popup.classList.remove('hidden');
+                setTimeout(() => {
+                    backdrop.classList.add('opacity-100');
+                    content.classList.add('opacity-100', 'scale-100');
+                }, 10);
+            }
+
+            function close() {
+                backdrop.classList.remove('opacity-100');
+                content.classList.remove('opacity-100', 'scale-100');
+                setTimeout(() => popup.classList.add('hidden'), 300);
+            }
+
+            closeBtn?.addEventListener('click', close);
+            backdrop?.addEventListener('click', close);
+            openBtn?.addEventListener('click', function() {
+                close();
+                openCafeNews();
+            });
+            setTimeout(open, 5000);
+        }
+        
+        function initDiscoverSection() {
+            const aboutUsBtn = document.getElementById('about-us-btn');
+            const sinnkawaFamilyBtn = document.getElementById('sinnkawa-family-btn');
+            const aboutUsPanel = document.getElementById('about-us-panel');
+            const sinnkawaFamilyPanel = document.getElementById('sinnkawa-family-panel');
+            const allButtons = [aboutUsBtn, sinnkawaFamilyBtn, document.querySelector('#discover a.discover-btn')];
+            
+            function setActive(activeBtn, activePanel) {
+                allButtons.forEach(btn => {
+                    btn?.classList.toggle('bg-primary', btn === activeBtn);
+                    btn?.classList.toggle('text-white', btn === activeBtn);
+                    btn?.classList.toggle('bg-white', btn !== activeBtn);
+                    btn?.classList.toggle('text-dark', btn !== activeBtn);
+                });
+                [aboutUsPanel, sinnkawaFamilyPanel].forEach(p => p?.classList.toggle('hidden', p !== activePanel));
+            }
+
+            aboutUsBtn?.addEventListener('click', () => setActive(aboutUsBtn, aboutUsPanel));
+            sinnkawaFamilyBtn?.addEventListener('click', () => setActive(sinnkawaFamilyBtn, sinnkawaFamilyPanel));
+        }
+
+        // --- Start the application ---
+        initApp();
+    });
+    </script>
+</body>
+</html>

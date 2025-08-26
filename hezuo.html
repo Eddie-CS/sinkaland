@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sinnkawa | 商业合作</title>
+    <!-- 引入 Tailwind CSS CDN，用于快速构建现代化界面 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 Font Awesome，用于图标显示 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- 引入 Swiper.js，用于轮播图效果 -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <!-- 引入 Poppins 字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- 引入 i18next 用于多语言支持 -->
+    <script src="https://unpkg.com/i18next@22.4.9/i18next.min.js"></script>
+
+    <!-- 新页脚的样式和页面主体样式 -->
+    <style>
+      /* 确保页面内容不被固定页脚遮挡 */
+      body {
+        font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        margin: 0;
+        /* 这里的 padding-bottom 值应与页脚高度一致 */
+        padding-bottom: 70px; 
+        background-color: #f0fcfc; /* 匹配 Tailwind 的 secondary 颜色 */
+        color: #4a5c5c; /* 匹配 Tailwind 的 dark 颜色 */
+      }
+
+      /* --- 从您的代码转换而来的页脚样式 --- */
+      .footer-bar {
+        --pantone-2397C: #58BEC9; /* CMYK: 56, 0, 18, 0 */
+        --pantone-9520U: #BAE0E3; /* CMYK: 18, 0, 7, 0 */
+        --pantone-9063U: #E2F3ED; /* CMYK: 10, 0, 7, 0 */
+        
+        background-color: #58BEC9; /* 背景颜色 */
+        color: #FFFFFF; /* 文字颜色 */
+        padding: 15px 0;
+        text-align: center;
+        width: 100%;
+        height: 70px; /* 页脚高度 */
+        
+        /* 固定定位的关键CSS */
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        z-index: 1000; /* 确保页脚在其他元素之上 */
+        
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        
+        /* 添加阴影效果使页脚更突出 */
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .footer-bar__container {
+        width: 100%;
+        max-width: 1200px; /* 内容最大宽度 */
+        margin: 0 auto;
+        padding: 0 20px;
+        display: flex;
+        justify-content: space-between; /* 内容两端对齐 */
+        align-items: center;
+      }
+
+      .footer-bar__copyright {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.5;
+        margin: 0;
+      }
+
+      .footer-bar__social {
+        display: flex;
+        align-items: center;
+        gap: 15px; /* 图标间距 */
+      }
+
+      .footer-bar__social-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;  /* 图标容器尺寸 */
+        height: 36px; /* 图标容器尺寸 */
+        border-radius: 50%; /* 图标形状: circle */
+        background-color: rgba(255, 255, 255, 0.2);
+        transition: opacity 0.3s ease, background-color 0.3s ease;
+      }
+
+      .footer-bar__social-icon svg {
+        width: 20px;  /* 图标图像尺寸 */
+        height: 20px; /* 图标图像尺寸 */
+        /* CSS滤镜，将黑色SVG图标变为白色 */
+        filter: brightness(0) invert(1);
+      }
+
+      .footer-bar__social-icon:hover {
+        opacity: 0.8;
+        background-color: rgba(255, 255, 255, 0.3);
+      }
+
+      /* 移动端响应式布局 */
+      @media screen and (max-width: 767px) {
+        body {
+            /* 移动端页脚高度可能不同，需要对应调整 */
+            padding-bottom: 110px; 
+        }
+        .footer-bar {
+            height: auto;
+            padding: 15px 0;
+        }
+        .footer-bar__container {
+          flex-direction: column; /* 垂直排列 */
+          gap: 15px;
+        }
+        
+        .footer-bar__copyright {
+          order: 2; /* 版权信息在下方 */
+          font-size: 12px;
+        }
+        
+        .footer-bar__social {
+          order: 1; /* 社交图标在上方 */
+          gap: 10px;
+        }
+
+        .footer-bar__social-icon {
+          width: 32px;
+          height: 32px;
+        }
+
+        .footer-bar__social-icon svg {
+          width: 18px;
+          height: 18px;
+        }
+      }
+    </style>
+    
+    <!-- Custom Tailwind config -->
+    <style type="text/tailwindcss">
+        @layer utilities {
+            /* Fade-in animation for elements on scroll */
+            .fade-in {
+                opacity: 0;
+                transform: translateY(20px);
+                transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            }
+            .fade-in.visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            /* Floating animation for decorative elements */
+            .animate-float {
+                animation: float 6s ease-in-out infinite;
+            }
+            @keyframes float {
+                0% { transform: translateY(0px); }
+                50% { transform: translateY(-20px); }
+                100% { transform: translateY(0px); }
+            }
+            /* Language switcher styling */
+            .language-switcher {
+                display: flex;
+                gap: 8px;
+            }
+            .language-switcher button {
+                padding: 6px 12px;
+                border-radius: 9999px;
+                font-size: 0.875rem;
+                font-weight: 600;
+                transition: all 0.2s ease;
+            }
+            .language-switcher button.active {
+                background-color: #58BEC9; /* Updated color */
+                color: #FFFFFF;
+            }
+            .language-switcher button:not(.active) {
+                background-color: #f0fcfc;
+                color: #4a5c5c;
+            }
+        }
+    </style>
+    <script>
+        // Configure Tailwind colors and fonts
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#58BEC9', // Updated primary color from footer
+                        'primary-hover': '#4ab1bd', // Derived hover color
+                        'secondary': '#f0fcfc',
+                        'accent': '#BAE0E3', // Updated accent color from footer
+                        'accent-hover': '#a8d0d3', // Derived hover color
+                        'dark': '#4a5c5c',
+                        'muted': '#7f9595',
+                        'light': '#FFFFFF',
+                        'light-border': '#eafaf9',
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        display: ['Poppins', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="antialiased">
+
+    <!-- Header & Navigation -->
+    <header class="sticky top-0 w-full bg-light/80 backdrop-blur-sm shadow-sm z-40 transition-all duration-200">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20 md:h-24">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="index.html" class="flex-shrink-0">
+                        <img src="assets/LOGO/logoAI文件.png" alt="Sinnkawa Logo" class="h-16 md:h-20" onerror="this.onerror=null;this.src='https://placehold.co/150x60/FFFFFF/4a5c5c?text=Sinnkawa';">
+                    </a>
+                    <a href="index.html" class="ml-4 text-dark hover:text-primary font-medium transition-colors">
+                        <i class="fas fa-home"></i> <span data-i18n-key="nav_home">回到主页</span>
+                    </a>
+                </div>
+                <!-- Main Navigation & Language Switcher -->
+                <div class="flex items-center space-x-4">
+                    <nav class="hidden md:flex space-x-8 text-dark" aria-label="Main Navigation">
+                        <a href="#hero" class="hover:text-primary font-medium transition-colors" data-i18n-key="nav_vision"></a>
+                        <a href="#advantages" class="hover:text-primary font-medium transition-colors" data-i18n-key="nav_advantages"></a>
+                        <a href="#opportunities" class="hover:text-primary font-medium transition-colors" data-i18n-key="nav_opportunities"></a>
+                    </nav>
+                    <!-- Language Switcher -->
+                    <div class="language-switcher hidden md:flex">
+                        <button id="lang-zh">中文</button>
+                        <button id="lang-en" class="active">EN</button>
+                    </div>
+                </div>
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-dark focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed inset-0 bg-light/95 backdrop-blur-sm z-30 transform -translate-x-full transition-transform duration-300 md:hidden">
+        <div class="flex flex-col items-center justify-center h-full space-y-8 text-xl">
+            <a href="#hero" class="hover:text-primary" data-i18n-key="nav_vision"></a>
+            <a href="#advantages" class="hover:text-primary" data-i18n-key="nav_advantages"></a>
+            <a href="#opportunities" class="hover:text-primary" data-i18n-key="nav_opportunities"></a>
+            <div class="language-switcher">
+                <button id="mobile-lang-zh">中文</button>
+                <button id="mobile-lang-en" class="active">EN</button>
+            </div>
+            <button id="close-mobile-menu" class="absolute top-8 right-8 text-dark text-3xl">&times;</button>
+        </div>
+    </div>
+
+    <main>
+        <!-- Hero Section: Brand Vision & Story -->
+        <section id="hero" class="relative bg-dark text-light min-h-screen flex items-center justify-center overflow-hidden py-20"
+                 style="background-image: url('assets/占位图/背景3.png'); background-size: cover; background-position: center;">
+            <div class="absolute inset-0 bg-dark opacity-80 z-0"></div>
+            <div class="absolute top-1/4 left-10 w-40 h-40 bg-primary/20 rounded-full blur-3xl animate-float"></div>
+            <div class="absolute bottom-1/4 right-10 w-60 h-60 bg-accent/20 rounded-full blur-3xl animate-float" style="animation-delay: 1.5s;"></div>
+            
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center fade-in">
+                <h1 class="text-5xl md:text-6xl font-display font-bold mb-6 drop-shadow-lg" data-i18n-key="hero_title"></h1>
+                <p class="text-lg md:text-xl max-w-3xl mx-auto mb-10 text-light drop-shadow-md" data-i18n-key="hero_subtitle"></p>
+                <div class="flex flex-col sm:flex-row justify-center lg:justify-center gap-4">
+                    <a href="https://api.whatsapp.com/send/?phone=6597759906&text&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer" class="inline-block bg-primary hover:bg-primary-hover text-white font-semibold px-10 py-4 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
+                        <i class="fab fa-whatsapp mr-2"></i> <span data-i18n-key="cta_whatsapp"></span>
+                    </a>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSemVdafc73jXXklkH3nQFisOUVfSyEo08NFiCDirR3dEUr7Hw/viewform" target="_blank" rel="noopener noreferrer" class="inline-block bg-light hover:bg-gray-50 text-dark font-semibold px-10 py-4 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
+                        <i class="fas fa-file-alt mr-2"></i> <span data-i18n-key="cta_form"></span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Our Core Advantages -->
+        <section id="advantages" class="py-20 bg-light">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16 fade-in">
+                    <h2 class="text-4xl font-bold mb-4" data-i18n-key="why_us_title"></h2>
+                    <p class="text-muted max-w-2xl mx-auto" data-i18n-key="why_us_subtitle"></p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 fade-in">
+                    <div class="bg-secondary p-8 rounded-2xl shadow-md text-center transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+                        <div class="text-4xl text-primary mb-4">
+                            <img src="assets/LOGO/尾巴.png" alt="IP资产" class="h-16 w-16 mx-auto rounded-full object-cover">
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2" data-i18n-key="adv_ip_title"></h3>
+                        <p class="text-muted text-sm" data-i18n-key="adv_ip_desc"></p>
+                    </div>
+                    <div class="bg-secondary p-8 rounded-2xl shadow-md text-center transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+                        <div class="text-4xl text-primary mb-4"><i class="fas fa-bullhorn"></i></div>
+                        <h3 class="text-xl font-semibold mb-2" data-i18n-key="adv_community_title"></h3>
+                        <p class="text-muted text-sm" data-i18n-key="adv_community_desc"></p>
+                    </div>
+                    <div class="bg-secondary p-8 rounded-2xl shadow-md text-center transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+                        <div class="text-4xl text-primary mb-4"><i class="fas fa-lightbulb"></i></div>
+                        <h3 class="text-xl font-semibold mb-2" data-i18n-key="adv_creativity_title"></h3>
+                        <p class="text-muted text-sm" data-i18n-key="adv_creativity_desc"></p>
+                    </div>
+                    <div class="bg-secondary p-8 rounded-2xl shadow-md text-center transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+                        <div class="text-4xl text-primary mb-4"><i class="fas fa-chart-line"></i></div>
+                        <h3 class="text-xl font-semibold mb-2" data-i18n-key="adv_value_title"></h3>
+                        <p class="text-muted text-sm" data-i18n-key="adv_value_desc"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Metrics -->
+        <section id="metrics" class="py-20 bg-secondary">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16 fade-in">
+                    <h2 class="text-4xl font-bold mb-4" data-i18n-key="metrics_title"></h2>
+                    <p class="text-muted max-w-2xl mx-auto" data-i18n-key="metrics_subtitle"></p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    <div class="bg-light p-8 rounded-2xl shadow-lg fade-in">
+                        <p class="text-5xl font-bold text-primary mb-2" data-i18n-key="metrics_followers_count"></p>
+                        <h3 class="text-xl font-semibold" data-i18n-key="metrics_followers_label"></h3>
+                        <p class="text-muted text-sm mt-2" data-i18n-key="metrics_followers_desc"></p>
+                    </div>
+                    <div class="bg-light p-8 rounded-2xl shadow-lg fade-in" style="animation-delay: 0.2s;">
+                        <p class="text-5xl font-bold text-accent mb-2" data-i18n-key="metrics_reach_count"></p>
+                        <h3 class="text-xl font-semibold" data-i18n-key="metrics_reach_label"></h3>
+                        <p class="text-muted text-sm mt-2" data-i18n-key="metrics_reach_desc"></p>
+                    </div>
+                    <div class="bg-light p-8 rounded-2xl shadow-lg fade-in" style="animation-delay: 0.4s;">
+                        <p class="text-5xl font-bold text-primary mb-2" data-i18n-key="metrics_projects_count"></p>
+                        <h3 class="text-xl font-semibold" data-i18n-key="metrics_projects_label"></h3>
+                        <p class="text-muted text-sm mt-2" data-i18n-key="metrics_projects_desc"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Collaboration Opportunities -->
+        <section id="opportunities" class="py-20 bg-light">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16 fade-in">
+                    <h2 class="text-4xl font-bold mb-4" data-i18n-key="opportunities_title"></h2>
+                    <p class="text-muted max-w-2xl mx-auto" data-i18n-key="opportunities_subtitle"></p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+                    <div class="bg-secondary p-8 rounded-3xl shadow-lg flex flex-col items-center text-center fade-in">
+                        <div class="w-20 h-20 bg-primary/20 text-primary rounded-full flex items-center justify-center mb-6">
+                            <i class="fas fa-handshake text-3xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-2" data-i18n-key="op_collab_title"></h3>
+                        <p class="text-muted text-sm" data-i18n-key="op_collab_desc"></p>
+                    </div>
+                    <div class="bg-secondary p-8 rounded-3xl shadow-lg flex flex-col items-center text-center fade-in" style="animation-delay: 0.2s;">
+                        <div class="w-20 h-20 bg-accent/20 text-accent rounded-full flex items-center justify-center mb-6">
+                            <i class="fas fa-camera-retro text-3xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-2" data-i18n-key="op_space_title"></h3>
+                        <p class="text-muted text-sm" data-i18n-key="op_space_desc"></p>
+                    </div>
+                    <div class="bg-secondary p-8 rounded-3xl shadow-lg flex flex-col items-center text-center fade-in" style="animation-delay: 0.4s;">
+                        <div class="w-20 h-20 bg-primary/20 text-primary rounded-full flex items-center justify-center mb-6">
+                            <i class="fas fa-crown text-3xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-semibold mb-2" data-i18n-key="op_licensing_title"></h3>
+                        <p class="text-muted text-sm" data-i18n-key="op_licensing_desc"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- IP Core Value -->
+        <section id="ip-value" class="py-20 bg-secondary">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16 fade-in">
+                    <h2 class="text-4xl font-bold mb-4" data-i18n-key="ip_value_title"></h2>
+                    <p class="text-muted max-w-2xl mx-auto" data-i18n-key="ip_value_subtitle"></p>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="fade-in">
+                        <img src="assets/占位图/英雄更新.png" alt="Sinnkawa characters and their story" class="w-full rounded-2xl shadow-xl">
+                    </div>
+                    <div class="fade-in">
+                        <h3 class="text-3xl font-bold mb-4" data-i18n-key="ip_value_main_title"></h3>
+                        <p class="text-muted text-lg mb-4" data-i18n-key="ip_value_main_desc"></p>
+                        <ul class="list-disc list-inside space-y-2 text-dark">
+                            <li data-i18n-key="ip_value_list_1"></li>
+                            <li data-i18n-key="ip_value_list_2"></li>
+                            <li data-i18n-key="ip_value_list_3"></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section id="testimonials" class="py-20 bg-light">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16 fade-in">
+                    <h2 class="text-4xl font-bold mb-4" data-i18n-key="testimonials_title"></h2>
+                    <p class="text-muted max-w-2xl mx-auto" data-i18n-key="testimonials_subtitle"></p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-secondary p-8 rounded-2xl shadow-lg fade-in">
+                        <p class="text-lg italic text-muted mb-4" data-i18n-key="testimonial_1_quote"></p>
+                        <p class="text-dark font-semibold text-right" data-i18n-key="testimonial_1_author"></p>
+                        <p class="text-xs text-muted text-right" data-i18n-key="testimonial_1_company"></p>
+                    </div>
+                    <div class="bg-secondary p-8 rounded-2xl shadow-lg fade-in" style="animation-delay: 0.2s;">
+                        <p class="text-lg italic text-muted mb-4" data-i18n-key="testimonial_2_quote"></p>
+                        <p class="text-dark font-semibold text-right" data-i18n-key="testimonial_2_author"></p>
+                        <p class="text-xs text-muted text-right" data-i18n-key="testimonial_2_company"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action Section -->
+        <section id="contact-cta" class="py-20 bg-secondary">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center fade-in">
+                <h2 class="text-4xl font-bold mb-4" data-i18n-key="cta_title"></h2>
+                <p class="text-muted max-w-2xl mx-auto mb-8" data-i18n-key="cta_subtitle"></p>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSemVdafc73jXXklkH3nQFisOUVfSyEo08NFiCDirR3dEUr7Hw/viewform" target="_blank" rel="noopener noreferrer" class="inline-block bg-primary hover:bg-primary-hover text-white font-semibold px-10 py-4 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
+                    <i class="fas fa-paper-plane mr-2"></i> <span data-i18n-key="cta_button"></span>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- New Footer -->
+    <footer class="footer-bar">
+      <div class="footer-bar__container">
+        <p class="footer-bar__copyright" data-i18n-key="footer_copyright"></p>
+        
+        <div class="footer-bar__social">
+          <a href="https://www.facebook.com/sinnkawa" class="footer-bar__social-icon" aria-label="Facebook" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 13.5h2.5l1-4H14v-2c0-1.03 0-2 2-2h1.5V2.14c-.326-.043-1.557-.14-2.857-.14C11.928 2 10 3.657 10 6.7v2.8H7v4h3V22h4v-8.5z"></path></svg>
+          </a>
+          
+          <a href="https://www.xiaohongshu.com/user/profile/664f08440000000003030e90" class="footer-bar__social-icon" aria-label="小红书" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="Poppins, sans-serif" font-size="10" font-weight="bold" fill="black">RED</text>
+            </svg>
+          </a>
+          
+          <a href="https://www.tiktok.com/@sinnkawasingapore" class="footer-bar__social-icon" aria-label="TikTok" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"></path></svg>
+          </a>
+          
+          <a href="https://wa.me/6597759906" class="footer-bar__social-icon" aria-label="WhatsApp" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zM12.04 20.12c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31c-.82-1.31-1.26-2.83-1.26-4.38 0-4.54 3.7-8.24 8.24-8.24 4.54 0 8.24 3.7 8.24 8.24 0 4.55-3.7 8.24-8.24 8.24zm4.52-6.13c-.24-.12-1.45-.72-1.68-.8s-.39-.12-.55.12c-.17.24-.63.8-.78.96-.15.17-.3.18-.55.06s-1.02-.38-1.95-1.2c-.72-.64-1.2-1.43-1.34-1.68-.14-.25-.01-.38.11-.5.11-.11.24-.28.37-.42.12-.14.17-.25.24-.41.08-.17.04-.31-.02-.43s-.55-1.32-.76-1.81c-.2-.48-.4-.42-.55-.42h-.48c-.17 0-.43.06-.66.31s-.87.85-.87 2.07c0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.72.59.25 1.05.4 1.41.51.59.19 1.13.16 1.56.1.48-.07 1.45-1.17 1.65-1.61.2-.43.2-.8.14-.92s-.25-.12-.5-.24z"></path></svg>
+          </a>
+          
+          <a href="https://www.threads.net/@sinnkawa_official" class="footer-bar__social-icon" aria-label="Threads" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.75c-5.1 0-9.25 4.15-9.25 9.25s4.15 9.25 9.25 9.25 9.25-4.15 9.25-9.25S17.1 2.75 12 2.75zm0 17C7.72 19.75 4.25 16.28 4.25 12S7.72 4.25 12 4.25s7.75 3.47 7.75 7.75-3.47 7.75-7.75 7.75zm-1.8-6.05c-.39-.14-.84.14-.98.53-.14.39.14.84.53.98.7.25 1.47.39 2.25.39s1.55-.14 2.25-.39c.39-.14.67-.59.53-.98-.14-.39-.59-.67-.98-.53-.55.2-1.14.3-1.8.3s-1.25-.1-1.8-.3zm3.6-2.9c.39-.14.67-.59.53-.98-.14-.39-.59-.67-.98-.53-2.11.75-4.51.75-6.62 0-.39-.14-.84.14-.98.53-.14.39.14.84.53.98.98.35 2.03.52 3.11.52s2.13-.17 3.11-.52z"></path></svg>
+          </a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+        // i18n Translations
+        const translations = {
+            zh: {
+                translation: {
+                    nav_home: '回到主页',
+                    nav_vision: '品牌愿景',
+                    nav_advantages: '合作优势',
+                    nav_opportunities: '合作领域',
+                    cta_whatsapp: 'WhatsApp 联系',
+                    cta_form: '填写合作表单',
+                    hero_title: '<span class="text-primary">创意与可爱的无限可能</span>',
+                    hero_subtitle: 'Sinnkawa 不仅是一个品牌，更是一个充满想象力的IP宇宙。我们致力于将可爱艺术融入生活，期待与您携手，共同探索商业合作的无限可能。',
+                    why_us_title: '为什么选择与我们合作？',
+                    why_us_subtitle: '我们提供独特的IP价值、强大的市场影响力及专业的团队支持，助力您的品牌实现指数级增长。',
+                    adv_ip_title: '独特的IP资产',
+                    adv_ip_desc: 'Sinnkawa 拥有完整的世界观和鲜明的角色设定，为合作提供坚实的内容基础。',
+                    adv_community_title: '持续增长的社群',
+                    adv_community_desc: '我们拥有一个高度活跃和忠实的社群，能为您的品牌带来精准且有价值的关注。',
+                    adv_creativity_title: '专业的创意团队',
+                    adv_creativity_desc: '从概念到执行，我们的团队拥有丰富的经验，能为您量身定制最具创意的合作方案。',
+                    adv_value_title: '可观的商业价值',
+                    adv_value_desc: '我们的成功案例证明，Sinnkawa IP能有效提升产品销量、品牌知名度与用户忠诚度。',
+                    metrics_title: '核心数据一览',
+                    metrics_subtitle: '我们的品牌影响力以扎实的数据为证，期待与您共创佳绩。',
+                    metrics_followers_count: '高度活跃',
+                    metrics_followers_label: '社群互动',
+                    metrics_followers_desc: '在小红书、Instagram和TikTok等平台拥有忠实粉丝基础。',
+                    metrics_reach_count: '广泛触达',
+                    metrics_reach_label: '品牌曝光',
+                    metrics_reach_desc: '通过内容营销与线下活动，实现跨越式品牌触达。',
+                    metrics_projects_count: '15+',
+                    metrics_projects_label: '成功合作项目',
+                    metrics_projects_desc: '横跨酒店、零售、生活方式等多个领域。',
+                    opportunities_title: '合作领域',
+                    opportunities_subtitle: '我们诚挚地邀请不同领域的合作伙伴，共同创造前所未有的商业价值。',
+                    op_collab_title: '品牌联名与营销',
+                    op_collab_desc: '共同策划线上线下营销活动，或推出联名产品，深度触达双方用户。',
+                    op_space_title: '主题空间合作',
+                    op_space_desc: '打造 Sinnkawa 主题快闪店、展览或沉浸式体验空间，为用户带来惊喜。',
+                    op_licensing_title: 'IP 授权与产品开发',
+                    op_licensing_desc: '授权 Sinnkawa 角色形象，共同开发各类周边产品，拓展IP商业版图。',
+                    ip_value_title: 'IP核心价值：角色的力量',
+                    ip_value_subtitle: '我们的角色不仅仅是可爱的形象，更是情感的载体和故事的讲述者。',
+                    ip_value_main_title: '独特人设与情感共鸣',
+                    ip_value_main_desc: '每一个 Sinnkawa 角色都拥有饱满的个性和故事。莫里奥象征着新加坡的乐观精神，奥塔塔代表着自由与冒险，莫里娜则是活力的化身。这种真实而积极的形象能够与消费者建立深深的情感连接。',
+                    ip_value_list_1: '<span class="font-semibold text-primary">情感连接：</span> 角色故事带来品牌温度。',
+                    ip_value_list_2: '<span class="font-semibold text-primary">文化内涵：</span> 角色灵感源于新加坡，具有独特的文化魅力。',
+                    ip_value_list_3: '<span class="font-semibold text-primary">广泛受众：</span> 可爱治愈的风格跨越年龄和文化界限。',
+                    testimonials_title: '合作伙伴证言',
+                    testimonials_subtitle: '听听我们的合作伙伴如何评价与Sinnkawa的合作。',
+                    testimonial_1_quote: '“与Sinnkawa的合作超出了我们的预期，他们的IP形象深受用户喜爱，不仅提升了我们的销量，更让品牌形象变得生动有趣。”',
+                    testimonial_1_author: '王丽',
+                    testimonial_1_company: '市场总监，某时尚生活品牌',
+                    testimonial_2_quote: '“Sinnkawa的团队非常专业且富有创意，他们对IP的深刻理解，帮助我们成功打造了市场独有的主题空间，带来了巨大的客流和媒体关注。”',
+                    testimonial_2_author: '张明',
+                    testimonial_2_company: '品牌经理，某高端酒店',
+                    cta_title: '开启您的合作之旅',
+                    cta_subtitle: '我们期待与您一同创造价值。点击下方按钮，填写合作意向表，我们的团队将会尽快与您联系。',
+                    cta_button: '立即申请合作',
+                    footer_copyright: '© 2025 SINGAPORE SINNKAWA PTE LTD. ALL RIGHTS RESERVED.'
+                }
+            },
+            en: {
+                translation: {
+                    nav_home: 'Back to Home',
+                    nav_vision: 'Our Vision',
+                    nav_advantages: 'Our Advantages',
+                    nav_opportunities: 'Opportunities',
+                    cta_whatsapp: 'Contact via WhatsApp',
+                    cta_form: 'Fill out the Form',
+                    hero_title: '<span class="text-primary">Endless Possibilities of Art & Cuteness</span>',
+                    hero_subtitle: 'Sinnkawa is more than a brand; it is a universe of imagination. We are committed to weaving cute art into daily life and look forward to collaborating with you to explore limitless opportunities.',
+                    why_us_title: 'Why Partner With Us?',
+                    why_us_subtitle: 'We offer unique IP value, strong market influence, and professional team support to help your brand achieve exponential growth.',
+                    adv_ip_title: 'Unique IP Assets',
+                    adv_ip_desc: 'Sinnkawa has a complete world-building and distinct character settings, providing a solid content foundation for our collaborations.',
+                    adv_community_title: 'Growing Community',
+                    adv_community_desc: 'We have a highly active and loyal community that can bring precise and valuable attention to your brand.',
+                    adv_creativity_title: 'Professional Creative Team',
+                    adv_creativity_desc: 'From concept to execution, our experienced team can tailor the most creative collaboration plans for you.',
+                    adv_value_title: 'Significant Commercial Value',
+                    adv_value_desc: 'Our successful cases prove that Sinnkawa IP can effectively boost product sales, brand awareness, and customer loyalty.',
+                    metrics_title: 'Key Metrics at a Glance',
+                    metrics_subtitle: 'Our brand influence is supported by solid data. We look forward to achieving great results with you.',
+                    metrics_followers_count: 'Highly Engaged',
+                    metrics_followers_label: 'Community Interaction',
+                    metrics_followers_desc: 'A loyal fan base on platforms like Xiaohongshu, Instagram, and TikTok.',
+                    metrics_reach_count: 'Broad Reach',
+                    metrics_reach_label: 'Brand Exposure',
+                    metrics_reach_desc: 'Achieving cross-platform brand reach through content marketing and offline events.',
+                    metrics_projects_count: '15+',
+                    metrics_projects_label: 'Successful Projects',
+                    metrics_projects_desc: 'Spanning multiple sectors, including hospitality, retail, and lifestyle.',
+                    opportunities_title: 'Collaboration Opportunities',
+                    opportunities_subtitle: 'We sincerely invite partners from various fields to create unprecedented commercial value together.',
+                    op_collab_title: 'Brand Co-branding & Marketing',
+                    op_collab_desc: 'Jointly plan online and offline marketing campaigns or launch co-branded products to deeply engage with both our audiences.',
+                    op_space_title: 'Themed Space Collaboration',
+                    op_space_desc: 'Create Sinnkawa themed pop-up stores, exhibitions, or immersive spaces to surprise and delight customers.',
+                    op_licensing_title: 'IP Licensing & Product Development',
+                    op_licensing_desc: 'License Sinnkawa character images to co-develop various merchandise and expand the IP\'s commercial footprint.',
+                    ip_value_title: 'IP Core Value: The Power of Characters',
+                    ip_value_subtitle: 'Our characters are more than cute images; they are vessels of emotion and storytellers.',
+                    ip_value_main_title: 'Unique Personalities & Emotional Resonance',
+                    ip_value_main_desc: 'Each Sinnkawa character has a rich personality and story. Merlion symbolizes Singapore\'s optimistic spirit, Otata represents freedom and adventure, and Merlina is the embodiment of vitality. These authentic and positive characters build deep emotional connections with consumers.',
+                    ip_value_list_1: '<span class="font-semibold text-primary">Emotional Connection:</span> Character stories add warmth to the brand.',
+                    ip_value_list_2: '<span class="font-semibold text-primary">Cultural Essence:</span> Characters are inspired by Singapore, giving them a unique cultural charm.',
+                    ip_value_list_3: '<span class="font-semibold text-primary">Broad Appeal:</span> The cute and heartwarming style transcends age and cultural boundaries.',
+                    testimonials_title: 'Partner Testimonials',
+                    testimonials_subtitle: 'Hear what our partners have to say about collaborating with Sinnkawa.',
+                    testimonial_1_quote: '“Our collaboration with Sinnkawa exceeded our expectations. Their IP is beloved by our customers, not only boosting sales but also making our brand image more lively and engaging.”',
+                    testimonial_1_author: 'Li Wang',
+                    testimonial_1_company: 'Marketing Director, A Fashion & Lifestyle Brand',
+                    testimonial_2_quote: '“The Sinnkawa team is highly professional and creative. Their deep understanding of their IP helped us successfully create a unique themed space that drove immense foot traffic and media attention.”',
+                    testimonial_2_author: 'Ming Zhang',
+                    testimonial_2_company: 'Brand Manager, A High-end Hotel',
+                    cta_title: 'Start Your Collaboration Journey',
+                    cta_subtitle: 'We look forward to creating value with you. Click the button below to fill out the collaboration form, and our team will get in touch with you soon.',
+                    cta_button: 'Apply for Partnership Now',
+                    footer_copyright: '© 2025 SINGAPORE SINNKAWA PTE LTD. ALL RIGHTS RESERVED.'
+                }
+            }
+        };
+
+        // Function to update the page content based on the selected language
+        function updateContent(lng) {
+            document.querySelectorAll('[data-i18n-key]').forEach(el => {
+                const key = el.getAttribute('data-i18n-key');
+                const translation = i18next.t(key);
+                if (translation) {
+                    el.innerHTML = translation;
+                }
+            });
+            
+            // Update button active state
+            document.querySelectorAll('.language-switcher button').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.id.includes(lng)) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+        
+        // Mobile menu functions
+        function openMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileMenu) {
+                mobileMenu.classList.remove('-translate-x-full');
+            }
+        }
+        function closeMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileMenu) {
+                mobileMenu.classList.add('-translate-x-full');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize i18next and set up event listeners for language changes
+            i18next.init({
+                lng: 'en', // Set default to English
+                fallbackLng: 'zh',
+                resources: translations
+            }).then(() => {
+                updateContent('en');
+            });
+
+            document.getElementById('lang-zh').addEventListener('click', () => i18next.changeLanguage('zh').then(updateContent));
+            document.getElementById('lang-en').addEventListener('click', () => i18next.changeLanguage('en').then(updateContent));
+            document.getElementById('mobile-lang-zh').addEventListener('click', () => { i18next.changeLanguage('zh').then(updateContent); closeMobileMenu(); });
+            document.getElementById('mobile-lang-en').addEventListener('click', () => { i18next.changeLanguage('en').then(updateContent); closeMobileMenu(); });
+            
+            // Intersection Observer for fade-in effect
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.2 });
+            document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+            
+            // Mobile menu event listeners
+            document.getElementById('mobile-menu-button').addEventListener('click', openMobileMenu);
+            document.getElementById('close-mobile-menu').addEventListener('click', closeMobileMenu);
+            document.querySelectorAll('#mobile-menu a').forEach(link => {
+                link.addEventListener('click', closeMobileMenu);
+            });
+        });
+    </script>
+</body>
+</html>
